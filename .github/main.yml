@@ -1,0 +1,28 @@
+name: CommitWebSite
+on: push
+jobs:
+  deploy:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+          fetch-depth: 0
+      - name: Setup hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: "0.68.3"
+      - name: Build
+        run: hugo --minify
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.HUGO }}
+          external_repository: ajarmusch/ajarmusch.github.io
+          publish_dir: ./public
+          keep_files: true
+          user_name: ajarmusch
+          user_email: jarmusch@udel.edu
+          publish_branch: main
+          cname: www.ajarmusch.github.io
