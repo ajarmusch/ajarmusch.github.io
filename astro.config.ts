@@ -44,8 +44,8 @@ export default defineConfig({
 	},
 	// https://docs.astro.build/en/guides/prefetch/
 	prefetch: true,
+	// ! Please remember to replace the following site property with your own domain
 	site: "https://ajarmusch.github.io",
-	base: "/ajarmusch.github.io",
 	vite: {
 		optimizeDeps: {
 			exclude: ["@resvg/resvg-js"],
