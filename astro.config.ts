@@ -45,6 +45,7 @@ export default defineConfig({
 	// https://docs.astro.build/en/guides/prefetch/
 	prefetch: true,
 	site: "https://ajarmusch.github.io",
+	base: "/ajarmusch.github.io",
 	vite: {
 		optimizeDeps: {
 			exclude: ["@resvg/resvg-js"],
