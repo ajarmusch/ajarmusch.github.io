@@ -1,6 +1,6 @@
 ---
 import PageLayout from "@/layouts/Base.astro";
-import { cactusTech } from "@/data/cactusTech";
+import { publicationsTech } from "@/data/publications";
 
 const meta = {
 	description: "Aaron Jarmusch's personal website.",
@@ -18,7 +18,7 @@ const meta = {
 		<h2 class="mb-4 text-xl">Publications:</h1>
 		<dl class="space-y-4">
 			{
-				cactusTech.map(({ desc, href, title }) => (
+				publicationsTech.map(({ desc, href, title }) => (
 					<div class="flex flex-col gap-2 sm:flex-row">
 						<dt>
 							<span class="flex">

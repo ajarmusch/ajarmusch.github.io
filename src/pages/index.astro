@@ -3,7 +3,7 @@ import SocialList from "@/components/SocialList.astro";
 import PostPreview from "@/components/blog/PostPreview.astro";
 import { getAllPosts, sortMDByDate } from "@/data/post";
 import PageLayout from "@/layouts/Base.astro";
-import { cactusTech } from "@/data/cactusTech";
+import { publicationsTech } from "@/data/publications";
 
 const MAX_POSTS = 10;
 const allPosts = await getAllPosts();
@@ -19,7 +19,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 			<a
 				aria-label="github repository"
 				class="cactus-link inline-block"
-				href="https://github.com/ajarmusch"
+				href="https://crpl.cis.udel.edu"
 				rel="noopener noreferrer"
 				target="_blank">
 				Computational Research Programing Lab (CRPL)
@@ -73,7 +73,7 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 		</h2>
 		<dl class="space-y-4">
 			{
-				cactusTech.map(({ desc, href, title }) => (
+				publicationsTech.map(({ desc, href, title }) => (
 					<div class="flex flex-col gap-2 sm:flex-row">
 						<dt>
 							<span class="flex">

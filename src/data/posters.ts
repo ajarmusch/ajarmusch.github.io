@@ -1,5 +1,5 @@
-// src/data/cactusTech.ts
-export const cactusTech: { desc: string; href: string; title: string }[] = [
+// src/data/posters.ts
+export const postersTech: { desc: string; href: string; title: string }[] = [
   {
       desc: "Developing LLM-Driven Testsuite for Compiler Validation",
       href: "https://arxiv.org/abs/2310.04963",
