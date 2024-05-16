@@ -1,13 +1,18 @@
 // src/data/awards.ts
 export const awardsTech: { desc: string; href: string; title: string }[] = [
   {
-      desc: "Developing LLM-Driven Testsuite for Compiler Validation",
-      href: "https://arxiv.org/abs/2310.04963",
-      title: "LLM4VV",
+    desc: "Delaware Bay Section Student Activities Award",
+    href: "https://www.ece.udel.edu/student-honors-and-awards/",
+    title: "Institute of Electrical and Electronics Engineers"
   },
   {
-      desc: "Analysis of Validating and Verifying OpenACC Compilers 3.0 and Above",
-      href: "https://ieeexplore.ieee.org/document/10029456",
-      title: "OpenACC V&V"
-  }
+    desc: "Won Best Poster",
+    href: "https://capture.udel.edu/media/2023+Darwin+Symposium_Poster+Award+%26+Closing+Remarks/1_dic5n8e3/146154642",
+    title: "DARWIN Symposium 2023"
+  },
+  {
+    desc: "Won 3rd Place for Best Poster",
+    href: "https://src.acm.org/winners/2023",
+    title: "SC22 ACM Student Research Competition"
+  },
 ];

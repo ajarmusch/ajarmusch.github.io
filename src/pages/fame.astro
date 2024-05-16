@@ -1,6 +1,10 @@
 ---
 import PageLayout from "@/layouts/Base.astro";
 import { publicationsTech } from "@/data/publications";
+import { awardsTech } from "@/data/awards";
+import { postersTech } from "@/data/posters";
+import { talksTech } from "@/data/talks";
+
 
 const meta = {
 	description: "Aaron Jarmusch's personal website.",
@@ -34,7 +38,58 @@ const meta = {
 			}
 		</dl>
 		<h2 class="mb-4 text-xl">Awards:</h1>
+		<dl class="space-y-4">
+			{
+				awardsTech.map(({ desc, href, title }) => (
+					<div class="flex flex-col gap-2 sm:flex-row">
+						<dt>
+							<span class="flex">
+								<a class="cactus-link" href={href} rel="" target="_blank">
+									{title}
+								</a>
+								:
+							</span>
+						</dt>
+						<dd>{desc}</dd>
+					</div>
+				))
+			}
+		</dl>
 		<h2 class="mb-4 text-xl">Posters:</h1>
+		<dl class="space-y-4">
+			{
+				postersTech.map(({ desc, href, title }) => (
+					<div class="flex flex-col gap-2 sm:flex-row">
+						<dt>
+							<span class="flex">
+								<a class="cactus-link" href={href} rel="" target="_blank">
+									{title}
+								</a>
+								:
+							</span>
+						</dt>
+						<dd>{desc}</dd>
+					</div>
+				))
+			}
+		</dl>
 		<h2 class="mb-4 text-xl">Talks:</h1>
+		<dl class="space-y-4">
+			{
+				talksTech.map(({ desc, href, title }) => (
+					<div class="flex flex-col gap-2 sm:flex-row">
+						<dt>
+							<span class="flex">
+								<a class="cactus-link" href={href} rel="" target="_blank">
+									{title}
+								</a>
+								:
+							</span>
+						</dt>
+						<dd>{desc}</dd>
+					</div>
+				))
+			}
+		</dl>
 	</div>
 </PageLayout>

@@ -1,4 +1,5 @@
 ---
+import SocialList from "@/components/SocialList.astro";
 import { menuLinks, siteConfig } from "@/site-config";
 
 const year = new Date().getFullYear();
@@ -11,6 +12,8 @@ const year = new Date().getFullYear();
 		&copy; {siteConfig.author}
 		{year}.<span class="inline-block">&nbsp;😁&nbsp;</span>
 	</div>
+	<SocialList />
+
 	<nav
 		aria-label="More on this site"
 		class="flex gap-x-2 sm:gap-x-0 sm:divide-x sm:divide-gray-500"
