@@ -1,0 +1,40 @@
+---
+import PageLayout from "@/layouts/Base.astro";
+import { cactusTech } from "@/data/cactusTech";
+
+const meta = {
+	description: "Aaron Jarmusch's personal website.",
+	title: "10 Seconds of Fame",
+};
+
+---
+
+<PageLayout meta={meta}>
+	<div class="space-y-6">
+		<h1 class="title">10 Seconds of Fame</h1>
+		<p>
+			Hi, I’m Aaron. Want to learn more about my past... stalker&nbsp;😁&nbsp;
+		</p>
+		<h2 class="mb-4 text-xl">Publications:</h1>
+		<dl class="space-y-4">
+			{
+				cactusTech.map(({ desc, href, title }) => (
+					<div class="flex flex-col gap-2 sm:flex-row">
+						<dt>
+							<span class="flex">
+								<a class="cactus-link" href={href} rel="" target="_blank">
+									{title}
+								</a>
+								:
+							</span>
+						</dt>
+						<dd>{desc}</dd>
+					</div>
+				))
+			}
+		</dl>
+		<h2 class="mb-4 text-xl">Awards:</h1>
+		<h2 class="mb-4 text-xl">Posters:</h1>
+		<h2 class="mb-4 text-xl">Talks:</h1>
+	</div>
+</PageLayout>
