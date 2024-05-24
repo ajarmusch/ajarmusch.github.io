@@ -74,16 +74,15 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 		<dl class="space-y-4">
 			{
 				publicationsTech.map(({ desc, href, title }) => (
-					<div class="flex flex-col gap-2 sm:flex-row">
+					<div class="flex flex-col gap-2 sm:flex-row w-full">
 						<dt>
 							<span class="flex">
 								<a class="cactus-link" href={href} rel="" target="_blank">
 									{title}
 								</a>
-								:
+								: {desc}
 							</span>
 						</dt>
-						<dd>{desc}</dd>
 					</div>
 				))
 			}
