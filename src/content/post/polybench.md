@@ -153,6 +153,8 @@ The main struggles for this project were:
 
 ### Results
 
+In order to run on gpus we used a modification of the PolyBench C code. We instead used a code developed by the University of Delaware for parallizing across GPUs, [PolyBench-ACC](https://cavazos-lab.github.io/PolyBench-ACC/). This code was used to run the FDTD-2D and GEMM algorithms on the GPUs. For the AMD results we ran the OpenCL version, while for the Nvidia results we ran the CUDA version. Similarly for the CPU results we used the PolyBench C code.
+
 #### Cache Hit CPU
 
 Cache hit rates on CPU showed significant utilization of cache with hit rates almost being to 100% on L1 and closer to 100% on L2. The usage is highly efficient for all dataset sizes, on both the algorithms. The hit rates are no different for the dataset sizes.
