@@ -87,6 +87,8 @@ When analyzing your simulations, keep an eye on these crucial metrics:
 
 Anton is a special-purpose supercomputer for biomolecular simulation designed and constructed by [D.E. Shaw Research (DESRES)](http://deshawresearch.com/). Three generations of Anton machines have thus far been developed, each of which has executed biological MD simulations roughly 100 times faster than the fastest general-purpose supercomputers of its day. Anton systems have twice been awarded the Gordon Bell Prize (2017/2021). The figure below shows details on each of the three systems they have developed.
 
+![Anton Systems](src/data/img/anton.png)
+
 D. E. Shaw et al., paper presented at the Proceedings of the International Conference for High Performance Computing, Networking, Storage and Analysis, St. Louis, Missouri,  2021.
 
 ### Approach
@@ -151,7 +153,45 @@ The main struggles for this project were:
 
 ### Results
 
-Cache Hit CPU:
+#### Cache Hit CPU
+
+Cache hit rates on CPU showed significant utilization of cache with hit rates almost being to 100% on L1 and closer to 100% on L2. The usage is highly efficient for all dataset sizes, on both the algorithms. The hit rates are no different for the dataset sizes.
+
+![Cache Hit CPU](src/data/img/cpu_cache_hit.png)
+
+#### Cache Hit Rate GPU
+
+For FDTD, both L1 and L2 cache had consistent hit rates for both the datasets. L1 cache had a comparatively higher hit rate for this algorithm as compared to L2 on both the systems.
+
+![Cache Hit GPU](src/data/img/gpu_cache_hit_fdtd.png)
+
+For GEMM, L1 surprisingly had a lower hit rate than L2 in both the systems for large datasets. The hit rates were consistent in the Bridges system for both the datasets. In Delta, hit rate went down as the dataset size increased.
+
+![Cache Hit GPU](src/data/img/gpu_cache_hit_gemm.png)
+
+#### GPU Throughput
+
+![GPU Throughput](src/data/img/gpu_throughput.png)
+
+#### Roofline Model
+
+Key observations for the roofline models were that FDTD is memory bound and the algorithm operated near the roofline’s memory limit. This indicates that even if we increase the computational resources, it would not significantly change the result without addressing memory bottlenecks. For matrix multiplication, we could see that the algorithm did not fully utilize the available processing power. We could possibly increase the problem size to improve the performance. It is also very cache heavy which is utilizing a significant amount of cache effectively.
+
+FDTD-2D Large Dataset
+
+![Roofline FDTD Large Dataset](src/data/img/fdtd_large_roofline.png)
+
+FDTD-2D ExtraLarge Dataset
+
+![Roofline FDTD ExtraLarge Dataset](src/data/img/fdtd_extra_large_roofline.png)
+
+GEMM Large Dataset
+
+![Roofline GEMM Large Dataset](src/data/img/gemm_large_roofline.png)
+
+GEMM Extra Large Dataset
+
+![Roofline GEMM Extra Large Dataset](src/data/img/gemm_extra_large_roofline.png)
 
 ### Conclusion: What should I take away?
 
