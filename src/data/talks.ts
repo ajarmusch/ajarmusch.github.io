@@ -1,9 +1,9 @@
 // src/data/talks.ts
 export const talksTech: { desc: string; href: string; title: string }[] = [
   {
-      desc: "Analysis of OpenACC Validation and Verification Testsuite",
-      href: "https://events.zoom.us/ev/AnOrPQdYYb-Ce7uwa7N0xYh9tAEzl5v-mc2_HzB_TZTIP9QuKngZ~AggLXsr32QYFjq8BlYLZ5I06Dg?utm_source=NVsocial&utm_medium=banner&utm_campaign=OpenACC+V%26V+Webinar#new_tab",
-      title: "OpenACC Webinar Dec 2023",
+      desc: "Zero to GPU Hero with OpenACC",
+      href: "https://events.zoom.us/ev/AhutEliiTnk-ldUAqMWf-sR75rWpeGnIaFZ-oFuiUzg7N42riF_Z~AslJLITC4AAed3LnWof2uGIyffzBoUqa8DdI0HKNGcLNPQm0TLWuBv696g?utm_source=website&utm_medium=OACS+page&utm_campaign=OAC+Summit+2024",
+      title: "Open Accelerated Computing (OAC) Summit 2024 Tutorial",
   },
   {
       desc: "WACCPD workshop and ACM poster competition at SC22",

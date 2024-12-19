@@ -10,13 +10,19 @@ export const socialLinks: {
 		name: "mdi:github",
 	},
 	{
-			friendlyName: "LinkedIn",
-			link: "https://www.linkedin.com/in/aaron-jarmusch/",
-			name: "mdi:linkedin",
+		friendlyName: "LinkedIn",
+		link: "https://www.linkedin.com/in/aaron-jarmusch/",
+		name: "mdi:linkedin",
 	},
+	// {
+	// 	friendlyName: "Twitter",
+	// 	link: "https://twitter.com/aaronjarmusch",
+	// 	name: "mdi:twitter",
+	// },
 	{
-			friendlyName: "Twitter",
-			link: "https://twitter.com/aaronjarmusch",
-			name: "mdi:twitter",
+		friendlyName: "BlueSky",
+		link: "https://bsky.app/profile/ajarmusch.bsky.social",
+		name: "ri:bluesky-fill",
+
 	},
 ];
