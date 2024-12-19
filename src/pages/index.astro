@@ -65,7 +65,94 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 			Projects
 			</a>
 		</h2>
-		
+		<div class="space-y-10">
+			<div class="flex items-start space-x-4">
+				<!-- Left Column -->
+				<div class="flex-1">
+					<a
+						aria-label="github repository"
+						class="cactus-link inline-block text-lg font-semibold"
+						href="https://crpl.cis.udel.edu/oaccvv/"
+						rel="noopener noreferrer"
+						target="_blank"
+					>
+						OpenACC Validation and Verification (V&V) Testsuite
+					</a>
+					<p class="text-sm mt-2">
+						The goal of this project is to build a validation and a verification testsuite for the OpenACC Programming Model.
+					</p>
+
+					<div class="flex flex-wrap items-end gap-x-2">
+						<ul class="flex flex-1 items-center gap-x-2 sm:flex-initial">
+							<li class="flex">
+								<a
+									class="inline-block p-1 sm:hover:text-link"
+									href="https://github.com/OpenACCUserGroup/OpenACCV-V"
+									target="_blank"
+								>
+									<Icon aria-hidden="true" class="h-6 w-6" focusable="false" name="mdi:github" />
+									<span class="sr-only">Github</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+				
+				<!-- Right Column -->
+				<div class="flex-shrink-0">
+					<img
+						src="/OpenACC-logo-color.png"
+						alt="Logo"
+						class="w-60 h-34"
+					/>
+				</div>
+			</div>
+				
+			<div class="flex items-start space-x-4">
+				<!-- Right Column -->
+				<div class="flex-shrink-0">
+					<img
+						src="/OpenMP_logo.png"
+						alt="Logo"
+						class="w-60 h-34"
+					/>
+				</div>
+
+				<!-- Left Column -->
+				<div class="flex-1">
+					<a
+						aria-label="github repository"
+						class="cactus-link inline-block text-lg font-semibold"
+						href="https://s4pst.org"
+						rel="noopener noreferrer"
+						target="_blank"
+					>
+						Stewardship for Programming Systems and Tools (S4PST)
+					</a>
+					<p class="text-sm mt-2">
+						Our goal is to enable a more predictive ecosystem for the sustainability of high-performance computing (HPC) 
+						software for node level programming systems and tools (PST). Our work involves developing a CI/CD pipeline for 
+						LLVM Clang's and new-Flang's implementation for OpenMP Offloading. We are running suites of tests and benchmarks
+						on NVIDIA H100, GH200, AMD MI210, and MI300A GPUs.
+					</p>
+
+					<div class="flex flex-wrap items-end gap-x-2">
+						<ul class="flex flex-1 items-center gap-x-2 sm:flex-initial">
+							<li class="flex">
+								<a
+									class="inline-block p-1 sm:hover:text-link"
+									href="https://gitlab.e4s.io/uo-public/llvm-openmp-offloading-v2/-/pipelines"
+									target="_blank"
+								>
+									<Icon aria-hidden="true" class="h-6 w-6" focusable="false" name="mdi:gitlab" />
+									<span class="sr-only">GitLab</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
 	</section>
 
 	<section aria-label="Blog post list" class="mt-16">
