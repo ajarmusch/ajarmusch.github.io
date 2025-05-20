@@ -11,5 +11,5 @@ Here I outline the motivation for QEC, beginning with Richard Feynman’s observ
 
 Please the full paper on the Foundational Concepts in Quantum Error Correction below. This work was done for a class during my PhD. Taught by Dr. Swati Singh at the University of Delaware.
 
-- [View Presentation (PowerPoint)](src/data/documents/QEC-Aaron-Jarmusch.pdf)
-- [Download Full Paper (PDF)](src/data/documents/Foundational_Concepts_of_Quantum_Error_Correction.pdf)
+- ![View Presentation (PowerPoint)](src/data/documents/QEC-Aaron-Jarmusch.pdf)
+- ![Download Full Paper (PDF)](src/data/documents/Foundational_Concepts_of_Quantum_Error_Correction.pdf)
