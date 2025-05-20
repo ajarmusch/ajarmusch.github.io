@@ -2,6 +2,7 @@
 title: "Understanding Data Handling in Molecular Simulations"
 description: "This post is for testing the draft post functionality"
 publishDate: "15 December 2024"
+draft: false
 ---
 
 ### Molecular Simulations: Your Computational Microscope
