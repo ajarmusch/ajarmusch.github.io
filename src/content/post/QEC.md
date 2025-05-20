@@ -1,6 +1,6 @@
 ---
 title: "Foundational Concepts in Quantum Error Correction"
-description: "A compilation of my research into QEC"
+description: "A compilation of my research into quantum error correction"
 publishDate: "20 May 2025"
 draft: false
 ---
