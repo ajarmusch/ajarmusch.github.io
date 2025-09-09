@@ -33,11 +33,11 @@ export const menuLinks: { path: string; title: string }[] = [
 	},
 	{
 		path: "/fame/",
-		title: "10 Seconds of Fame",
+		title: "Publications",
 	},
 	{
 		path: "/posts/",
-		title: "Cool Stuff",
+		title: "Projects",
 	},
 ];
 
