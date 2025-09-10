@@ -1,6 +1,6 @@
 ---
 title: "Motor Algorithmic Regulation System (MARS) "
-description: "A compilation of my research into quantum error correction"
+description: "How I Built Better Noise Reduction Algorithms for Space Missions"
 publishDate: "20 May 2023"
 draft: false
 ---
