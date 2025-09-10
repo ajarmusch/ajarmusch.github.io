@@ -22,14 +22,14 @@ const meta = {
 		<h2 class="mb-4 text-xl">Publications:</h1>
 		<dl class="space-y-4">
 			{
-				publicationsTech.map(({ desc, href, title }) => (
+				publicationsTech.map((pub) => (
 					<div class="flex flex-col gap-2 sm:flex-row">
 						<dt>
 							<span class="flex">
-								<a class="cactus-link" href={href} rel="" target="_blank">
-									{title}
+								<a class="cactus-link" href={pub.url} rel="" target="_blank">
+									{pub.shortTitle}
 								</a>
-								: {desc}
+								: {pub.title}
 							</span>
 						</dt>
 					</div>
