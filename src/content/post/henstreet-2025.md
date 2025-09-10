@@ -1,5 +1,5 @@
 ---
-title: "SallieMae College ROI Model"
+title: "HenHacks: SallieMae College ROI Model"
 description: "How I Built a College ROI Calculator at HenStreet Hacks 2025"
 publishDate: "August 2025"
 draft: false
