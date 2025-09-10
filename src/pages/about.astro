@@ -1,36 +1,19 @@
 ---
 import PageLayout from "@/layouts/Base.astro";
 import { Icon } from "astro-icon/components";
+import { awardsTech } from "@/data/awards";
 ---
 
 <PageLayout meta={{ title: "About Aaron Jarmusch" }}>
-	<section>
-		<h1 class="title mb-6">About Aaron Jarmusch</h1>
-		
+	<section>		
 		<div class="space-y-8">
-			<!-- Professional Summary -->
-			<div>
-				<h2 class="text-xl font-semibold mb-4">Professional Summary</h2>
-				<p class="mb-4">
-					I am a Ph.D. candidate in Computer Science at the University of Delaware with a passion for 
-					advancing High Performance Computing (HPC) and making parallel programming more accessible 
-					and reliable. My research focuses on compiler validation, verification methodologies, and 
-					GPU computing technologies that drive scientific discovery and innovation.
-				</p>
-				<p class="mb-4">
-					As a researcher in the Computational Research Programming Lab (CRPL) under Dr. Sunita Chandrasekaran, 
-					I work at the intersection of theoretical computer science and practical HPC applications, 
-					contributing to robust testing frameworks for emerging parallel programming standards.
-				</p>
-			</div>
-
 			<!-- Education -->
 			<div>
 				<h2 class="text-xl font-semibold mb-4">Education</h2>
 				<div class="space-y-4">
 					<div class="border-l-4 border-blue-500 pl-4">
 						<h3 class="font-semibold">Ph.D. in Computer Science</h3>
-						<p class="text-sm text-gray-600">University of Delaware | Expected 2025</p>
+						<p class="text-sm text-gray-600">University of Delaware</p>
 						<p class="text-sm">Advisor: Dr. Sunita Chandrasekaran</p>
 						<p class="text-sm">Focus: High Performance Computing, Compiler Validation, GPU Programming</p>
 					</div>
@@ -45,31 +28,22 @@ import { Icon } from "astro-icon/components";
 			<div>
 				<h2 class="text-xl font-semibold mb-4">Honors & Awards</h2>
 				<div class="space-y-4">
-					<div class="border-l-4 border-yellow-500 pl-4">
-						<h3 class="font-semibold">Outstanding Graduate Student Researcher</h3>
-						<p class="text-sm text-gray-600">University of Delaware Computer Science Department</p>
-						<p class="text-sm">Recognition for contributions to HPC and compiler validation research</p>
-					</div>
-					<div class="border-l-4 border-blue-500 pl-4">
-						<h3 class="font-semibold">Conference Travel Awards</h3>
-						<p class="text-sm text-gray-600">Multiple conferences including SC, IPDPS</p>
-						<p class="text-sm">Funding for research presentation at premier HPC venues</p>
-					</div>
-					<div class="border-l-4 border-green-500 pl-4">
-						<h3 class="font-semibold">Graduate Research Fellowship</h3>
-						<p class="text-sm text-gray-600">University of Delaware</p>
-						<p class="text-sm">Full funding for doctoral research in High Performance Computing</p>
-					</div>
-					<div class="border-l-4 border-purple-500 pl-4">
-						<h3 class="font-semibold">OpenACC Community Contributor</h3>
-						<p class="text-sm text-gray-600">OpenACC User Group</p>
-						<p class="text-sm">Recognized contributions to OpenACC standard development and testing</p>
-					</div>
-					<div class="border-l-4 border-red-500 pl-4">
-						<h3 class="font-semibold">Best Student Paper Award Nominee</h3>
-						<p class="text-sm text-gray-600">Various HPC and Parallel Computing Conferences</p>
-						<p class="text-sm">Recognition for research excellence and innovation</p>
-					</div>
+					{
+						awardsTech.map((award, index) => {
+							const colors = ['yellow', 'blue', 'green', 'purple', 'red'];
+							const color = colors[index % colors.length];
+							return (
+								<div class={`border-l-4 border-${color}-500 pl-4`}>
+									<h3 class="font-bold text-lg">
+										<a href={award.href} class="cactus-link" target="_blank">
+											{award.title}
+										</a>
+									</h3>
+									<p class="text-sm text-gray-500 mt-1">{award.desc}</p>
+								</div>
+							);
+						})
+					}
 				</div>
 			</div>
 
