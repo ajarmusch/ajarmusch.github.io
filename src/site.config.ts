@@ -14,7 +14,7 @@ export const siteConfig: SiteConfig = {
 		},
 	},
 	// Meta property used as the default description meta property
-	description: "I'm a proud website for Aaron Jarmusch.",
+	description: "Aaron Jarmusch - Ph.D. Candidate in Computer Science specializing in High Performance Computing, GPU programming, and compiler validation at the University of Delaware.",
 	// HTML lang property, found in src/layouts/Base.astro L:18
 	lang: "en-GB",
 	// Meta property, found in src/components/BaseHead.astro L:42
@@ -22,7 +22,7 @@ export const siteConfig: SiteConfig = {
 	// Option to sort posts by updatedDate if set to true (if property exists). Default (false) will sort by publishDate
 	sortPostsByUpdatedDate: false,
 	// Meta property used to construct the meta title property, found in src/components/BaseHead.astro L:11
-	title: "Aaron"
+	title: "Aaron Jarmusch - HPC Researcher"
 };
 
 // Used to generate links in both the Header & Footer.
@@ -32,12 +32,16 @@ export const menuLinks: { path: string; title: string }[] = [
 		title: "Home",
 	},
 	{
-		path: "/fame/",
-		title: "Publications",
+		path: "/about/",
+		title: "About",
 	},
 	{
-		path: "/",
-		title: "Projects",
+		path: "/research/",
+		title: "Research",
+	},
+	{
+		path: "/fame/",
+		title: "Publications",
 	},
 	{
 		path: "/posts/",

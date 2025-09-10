@@ -1,9 +1,11 @@
 ---
-import SocialList from "@/components/SocialListWord.astro";
+import SocialList from "@/components/SocialList.astro";
 import PostPreview from "@/components/blog/PostPreview.astro";
 import { getAllPosts, sortMDByDate } from "@/data/post";
 import PageLayout from "@/layouts/Base.astro";
-import { publicationsTech } from "@/data/publications";
+import { publicationsTech, getDisplayPublication } from "@/data/publications";
+import { awardsTech } from "@/data/awards";
+import { researchAreas } from "@/data/research";
 import { Icon } from "astro-icon/components";
 
 
@@ -14,193 +16,212 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 
 <PageLayout meta={{ title: "Home" }}>
 	<section>
-		<h1 class="title mb-6">Hello Strangers!</h1>
-		<p class="mb-4">
-			Hi, I’m a website for Aaron, a Computer Science Ph.D. student at the 
-			University of Delaware. He's apart of the 
-			<a
-				aria-label="github repository"
-				class="cactus-link inline-block"
-				href="https://crpl.cis.udel.edu"
-				rel="noopener noreferrer"
-				target="_blank">
-				Computational Research Programing Lab (CRPL)
-			</a>
-			at UD under the advisory of Sunita Chandrasekaran. 
-		</p>
-		<p class="mb-4">
-			He's a researcher in the field of High Performance Computing (HPC) and 
-			Parallel Computing. He's also a developer and a lover of all things tech. 
-			He's currently working on a few projects and has a few publications under 
-			his belt.
-		<!-- <p class="mb-4">
-			I was recently built so he's still working on completing me. Feel free to 
-			browse around and check back later for updates.
-		</p> -->
-		<SocialList />
-	</section>
-
-	<section class="mt-16">
-		<h2 class="title mb-4 text-xl">
-			<a
-			aria-label="Blog Page"
-			class=" underline-offset-2 sm:py-0 sm:hover:underline"
-			href="/"
-			>
-			About Him
-			</a>
-		</h2>
-		<p class="text-sm">
-			PICTURE
-		</p>		
-	</section>
-
-	<section class="mt-16">
-		<h2 class="title mb-4 text-xl">
-			<a
-			aria-label="Blog Page"
-			class=" underline-offset-2 sm:py-0 sm:hover:underline"
-			href="/"
-			>
-			Projects
-			</a>
-		</h2>
-		<div class="space-y-10">
-			<div class="flex items-start space-x-4">
-				<!-- Left Column -->
-				<div class="flex-1">
-					<a
-						aria-label="github repository"
-						class="cactus-link inline-block text-lg font-semibold"
-						href="https://crpl.cis.udel.edu/oaccvv/"
-						rel="noopener noreferrer"
-						target="_blank"
-					>
-						OpenACC Validation and Verification (V&V) Testsuite
-					</a>
-					<p class="text-sm mt-2">
-						The goal of this project is to build a validation and a verification testsuite for the OpenACC Programming Model.
-					</p>
-
-					<div class="flex flex-wrap items-end gap-x-2">
-						<ul class="flex flex-1 items-center gap-x-2 sm:flex-initial">
-							<li class="flex">
-								<a
-									class="inline-block p-1 sm:hover:text-link"
-									href="https://github.com/OpenACCUserGroup/OpenACCV-V"
-									target="_blank"
-								>
-									<Icon aria-hidden="true" class="h-6 w-6" focusable="false" name="mdi:github" />
-									<span class="sr-only">Github</span>
-								</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-				
-				<!-- Right Column -->
-				<div class="flex-shrink-0">
+		<div class="flex flex-col md:flex-row md:items-start md:gap-8 mb-8">
+			<!-- Photo Section with Name and Social Links -->
+			<div class="flex-shrink-0 mb-6 md:mb-0">
+				<div class="w-48 h-48 md:w-56 md:h-56 mx-auto md:mx-0 mb-4">
 					<img
-						src="/OpenACC-logo-color.png"
-						alt="Logo"
-						class="w-60 h-34"
+						src="/headshot.jpg"
+						alt="Aaron Jarmusch"
+						class="w-full h-full object-cover rounded-lg shadow-lg"
 					/>
+				</div>
+				<div class="text-center md:text-left">
+					<h1 class="title mb-4">Aaron Jarmusch</h1>
+					<p class="mb-4 text-lg font-medium">
+					Ph.D. Student 
+					</p>
+					<SocialList />
 				</div>
 			</div>
-				
-			<div class="flex items-start space-x-4">
-				<!-- Right Column -->
-				<div class="flex-shrink-0">
-					<img
-						src="/OpenMP_logo.png"
-						alt="Logo"
-						class="w-60 h-34"
-					/>
-				</div>
-
-				<!-- Left Column -->
-				<div class="flex-1">
+			
+			<!-- Introduction -->
+			<div class="flex-1">
+				<p class="title mb-4">
+					About Me
+				</p>
+				<p class="mb-4">
+					I'm a Computer Science Ph.D. student at the University of Delaware researching High Performance Computing (HPC) and parallel programming models. As a member of the 
 					<a
-						aria-label="github repository"
-						class="cactus-link inline-block text-lg font-semibold"
-						href="https://s4pst.org"
+						aria-label="CRPL Lab website"
+						class="cactus-link font-bold text-accent"
+						href="https://crpl.cis.udel.edu"
 						rel="noopener noreferrer"
-						target="_blank"
-					>
-						Stewardship for Programming Systems and Tools (S4PST)
+						target="_blank">
+						Computational Research Programming Lab (CRPL)
 					</a>
-					<p class="text-sm mt-2">
-						Our goal is to enable a more predictive ecosystem for the sustainability of high-performance computing (HPC) 
-						software for node level programming systems and tools (PST). Our work involves developing a CI/CD pipeline for 
-						LLVM Clang's and new-Flang's implementation for OpenMP Offloading. We are running suites of tests and benchmarks
-						on NVIDIA H100, GH200, AMD MI210, and MI300A GPUs.
-					</p>
+					under <a
+						aria-label="Dr. Sunita Chandrasekaran"
+						class="cactus-link font-bold text-accent"
+						href="https://crpl.cis.udel.edu/sunita/"
+						rel="noopener noreferrer"
+						target="_blank">
+						Dr. Sunita Chandrasekaran
+					</a>, I focus on compiler validation and GPU computing technologies.
+				</p>
 
-					<div class="flex flex-wrap items-end gap-x-2">
-						<ul class="flex flex-1 items-center gap-x-2 sm:flex-initial">
-							<li class="flex">
-								<a
-									class="inline-block p-1 sm:hover:text-link"
-									href="https://gitlab.e4s.io/uo-public/llvm-openmp-offloading-v2/-/pipelines"
-									target="_blank"
-								>
-									<Icon aria-hidden="true" class="h-6 w-6" focusable="false" name="mdi:gitlab" />
-									<span class="sr-only">GitLab</span>
-								</a>
-							</li>
-						</ul>
-					</div>
-				</div>
+				<p class="mb-4">
+					My research develops comprehensive testing frameworks for OpenACC and OpenMP GPU offloading across NVIDIA's latest architectures (H100, GH200). I work on automated CI/CD pipelines for LLVM-based compilers and apply LLMs to compiler validation, making HPC technologies more accessible and robust.
+				</p>
+			</div>
+		</div>
+
+	<section class="mt-16">
+		<h2 class="title mb-4 text-xl">Recent News</h2>
+		<div class="space-y-3">
+			<div class="flex gap-4">
+				<span class="text-sm text-gray-600 min-w-[120px]">[August 2025]</span>
+				<span class="text-sm">Attended ATPESC 2025 (Argonne Training Program on Extreme-Scale Computing) at Argonne National Laboratory!</span>
+			</div>
+			<div class="flex gap-4">
+				<span class="text-sm text-gray-600 min-w-[120px]">[July 2025]</span>
+				<span class="text-sm">New preprint "Dissecting the NVIDIA Blackwell Architecture with Microbenchmarks" published on arXiv!</span>
+			</div>
+			<div class="flex gap-4">
+				<span class="text-sm text-gray-600 min-w-[120px]">[August 2024]</span>
+				<span class="text-sm">Paper accepted to WACCPD at SC24! - LLM-as-a-Judge for Validation and Verification Testsuites available on arXiv!</span>
+			</div>
+			<div class="flex gap-4">
+				<span class="text-sm text-gray-600 min-w-[120px]">[August 2024]</span>
+				<span class="text-sm">Paper accepted at IWOMP! - CI/CD framework for OpenMP Offloading validation and benchmarking!</span>
 			</div>
 		</div>
 	</section>
 
-	<section aria-label="Blog post list" class="mt-16">
+	<section class="mt-16">
 		<h2 class="title mb-4 text-xl">
 			<a
-			aria-label="Blog Page"
+			aria-label="Research Focus"
 			class=" underline-offset-2 sm:py-0 sm:hover:underline"
-			href="/posts/"
+			href="/research/"
 			>
-			Cool Stuff
+			Research & Impact
 			</a>
 		</h2>
-		<ul class="space-y-4">
+		<div class="space-y-6">
 			{
-				allPostsByDate.map((p) => (
-					<li class="grid gap-2 sm:grid-cols-[auto_1fr] sm:[&_q]:col-start-2">
-						<PostPreview as="div" post={p}/>
-					</li>
+				researchAreas.map((area) => (
+					<div class={`border-l-4 border-${area.color}-500 pl-4`}>
+						<h3 class="font-semibold text-lg mb-2">{area.title}</h3>
+						<p class="text-sm">
+							{area.description}
+						</p>
+					</div>
 				))
 			}
-		</ul>
+		</div>		
+	</section>
+
+	<section class="mt-16">
+		<h2 class="title mb-4 text-xl">Recent Publications</h2>
+		<p class="text-sm text-gray-600 mb-6">Visit <a href="https://scholar.google.com/citations?user=YOUR_ID" class="cactus-link" target="_blank">Google Scholar</a> for a full list</p>
+		
+		<div class="space-y-6">
+			{
+				publicationsTech
+					.sort((a, b) => b.year - a.year || (b.month && a.month ? new Date(b.month).getMonth() - new Date(a.month).getMonth() : 0))
+					.slice(0, 3)
+					.map((pub) => {
+						const displayPub = getDisplayPublication(pub);
+						return (
+							<div class="border-b border-gray-200 pb-4">
+								<p class="text-sm mb-2">
+									{pub.authors.map((author, index) => (
+										<span>
+											{author === "Aaron Jarmusch" ? (
+												<strong>{author}</strong>
+											) : (
+												<span>{author}</span>
+											)}
+											{index < pub.authors.length - 1 && <span>, </span>}
+										</span>
+									))}
+									<span> ({displayPub.year}). </span>
+									<a href={displayPub.url} class="cactus-link" target="_blank">
+										<strong>{pub.title}</strong>
+									</a>. 
+									<em>{displayPub.venue}</em>
+									{displayPub.pages && <span>, pages {displayPub.pages}</span>}
+									{displayPub.doi && <span>. doi: {displayPub.doi}</span>}
+								</p>
+								<div class="flex gap-2 mb-2">
+									{(pub.preprintPublication?.url || displayPub.pdfUrl) && (
+										<a href={pub.preprintPublication?.url || displayPub.pdfUrl} class="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded hover:bg-blue-200" target="_blank">PDF</a>
+									)}
+									{pub.preprintPublication && (
+										<a href={pub.preprintPublication.url} class="text-xs px-2 py-1 bg-gray-100 text-gray-800 rounded hover:bg-gray-200" target="_blank">Preprint</a>
+									)}
+									{pub.codeUrl && (
+										<a href={pub.codeUrl} class="text-xs px-2 py-1 bg-green-100 text-green-800 rounded hover:bg-green-200" target="_blank">Code</a>
+									)}
+									{pub.dataUrl && (
+										<a href={pub.dataUrl} class="text-xs px-2 py-1 bg-purple-100 text-purple-800 rounded hover:bg-purple-200" target="_blank">Data</a>
+									)}
+									{pub.award && (
+										<span class="text-xs px-2 py-1 bg-yellow-100 text-yellow-800 rounded">🏆 {pub.award}</span>
+									)}
+								</div>
+								{pub.keywords && pub.keywords.length > 0 && (
+									<div class="flex flex-wrap gap-1">
+										{pub.keywords.slice(0, 4).map(keyword => (
+											<span class="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded">{keyword}</span>
+										))}
+									</div>
+								)}
+							</div>
+						);
+					})
+			}
+		</div>
 	</section>
 
 	<section class="mt-16">
 		<h2 class="title mb-4 text-xl">
 			<a
-			aria-label="News Page"
+			aria-label="Recent Blog Posts"
 			class=" underline-offset-2 sm:py-0 sm:hover:underline"
-			href="/fame/"
+			href="/posts/"
 			>
-			10 Seconds of Fame
+			Recent Blog Posts
 			</a>
 		</h2>
-		<dl class="space-y-4">
-			{
-				publicationsTech.map(({ desc, href, title }) => (
-					<div class="flex flex-col gap-2 sm:flex-row w-full">
-						<dt>
-							<span class="flex">
-								<a class="cactus-link" href={href} rel="" target="_blank">
-									{title}
-								</a>
-								: {desc}
-							</span>
-						</dt>
-					</div>
-				))
-			}
-		</dl>
+		<p class="text-sm text-gray-600 mb-6">Insights on HPC research, technical tutorials, and industry perspectives</p>
+		
+		{allPostsByDate.length > 0 ? (
+			<ul class="space-y-6">
+				{
+					allPostsByDate.slice(0, 3).map((post) => (
+						<li class="border-b border-gray-200 pb-4 last:border-b-0">
+							<PostPreview as="div" post={post} />
+						</li>
+					))
+				}
+			</ul>
+		) : (
+			<div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 text-center">
+				<p class="text-gray-600 mb-4">Blog posts coming soon!</p>
+				<p class="text-sm text-gray-500">
+					I'm working on sharing insights about HPC research, GPU computing, and compiler validation. 
+					Check back soon for technical tutorials and research perspectives.
+				</p>
+			</div>
+		)}
+		
+		{allPostsByDate.length > 3 && (
+			<div class="mt-6 text-center">
+				<a
+					href="/posts/"
+					class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+				>
+					View All Posts
+					<svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+					</svg>
+				</a>
+			</div>
+		)}
 	</section>
+
+	
+
 </PageLayout>
