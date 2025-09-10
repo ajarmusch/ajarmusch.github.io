@@ -1,7 +1,7 @@
 ---
 title: "Motor Algorithmic Regulation System (MARS) "
 description: "How I Built Better Noise Reduction Algorithms for Space Missions"
-publishDate: "20 May 2023"
+publishDate: "May 2023"
 draft: false
 ---
 
