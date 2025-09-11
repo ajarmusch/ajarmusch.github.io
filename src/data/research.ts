@@ -114,17 +114,10 @@ export const researchAreas = [
   },
   {
     id: "hpc-systems",
-    title: "High Performance Computing Systems",
+    title: "Building CI/CD pipeline for LLVM-based compilers",
     description: "Advancing HPC software sustainability through automated CI/CD pipelines for LLVM-based compilers. Focus on performance optimization, cross-platform compatibility, and systematic benchmarking across diverse computing architectures.",
     technologies: ["LLVM", "GitLab CI/CD", "Docker", "Singularity", "SLURM"],
     color: "green"
-  },
-  {
-    id: "ai-testing",
-    title: "AI-Driven Software Testing",
-    description: "Pioneering applications of Large Language Models (LLMs) in compiler validation and verification. Developing automated test generation and validation systems that leverage AI to improve software reliability and reduce manual testing overhead.",
-    technologies: ["LLMs", "GPT Models", "Automated Testing", "Test Generation"],
-    color: "purple"
   }
 ];
 

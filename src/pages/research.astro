@@ -1,6 +1,7 @@
 ---
 import PageLayout from "@/layouts/Base.astro";
 import { Icon } from "astro-icon/components";
+import { researchProjects, researchAreas } from "@/data/research";
 ---
 
 <PageLayout meta={{ description: "Research - Aaron Jarmusch", title: "Research" }}>
@@ -26,150 +27,91 @@ import { Icon } from "astro-icon/components";
 	<section class="mt-16">
 		<h2 class="title mb-6 text-xl">Research Areas</h2>
 		<div class="space-y-8">
-			<div class="border-l-4 border-blue-500 pl-6">
-				<h3 class="font-semibold text-lg mb-3 text-blue-600">GPU Computing & Compiler Validation</h3>
-				<p class="mb-4">
-					Developing comprehensive validation and verification frameworks for OpenACC and OpenMP GPU offloading. 
-					My work ensures reliable performance across cutting-edge architectures including NVIDIA H100, GH200, 
-					and AMD MI300A systems.
-				</p>
-				<div class="text-sm text-gray-600">
-					<strong>Key Technologies:</strong> OpenACC, OpenMP, CUDA, HIP, LLVM, Clang
-				</div>
-			</div>
-			
-			<div class="border-l-4 border-green-500 pl-6">
-				<h3 class="font-semibold text-lg mb-3 text-green-600">High Performance Computing Systems</h3>
-				<p class="mb-4">
-					Advancing HPC software sustainability through automated CI/CD pipelines for LLVM-based compilers. 
-					Focus on performance optimization, cross-platform compatibility, and systematic benchmarking 
-					across diverse computing architectures.
-				</p>
-				<div class="text-sm text-gray-600">
-					<strong>Key Technologies:</strong> LLVM, GitLab CI/CD, Docker, Singularity, SLURM
-				</div>
-			</div>
-			
-			<div class="border-l-4 border-purple-500 pl-6">
-				<h3 class="font-semibold text-lg mb-3 text-purple-600">AI-Driven Software Testing</h3>
-				<p class="mb-4">
-					Pioneering applications of Large Language Models (LLMs) in compiler validation and verification. 
-					Developing automated test generation and validation systems that leverage AI to improve software 
-					reliability and reduce manual testing overhead.
-				</p>
-				<div class="text-sm text-gray-600">
-					<strong>Key Technologies:</strong> LLMs, GPT Models, Automated Testing, Test Generation
-				</div>
-			</div>
+			{
+				researchAreas.map((area) => (
+					<div class={`border-l-4 border-${area.color}-500 pl-6`}>
+						<h3 class={`font-semibold text-lg mb-3 text-${area.color}-600`}>{area.title}</h3>
+						<p class="mb-4">
+							{area.description}
+						</p>
+						<div class="text-sm text-gray-600">
+							<strong>Key Technologies:</strong> {area.technologies.join(", ")}
+						</div>
+					</div>
+				))
+			}
 		</div>
 	</section>
 
 	<section class="mt-16">
 		<h2 class="title mb-6 text-xl">Active Projects</h2>
 		<div class="space-y-10">
-			<div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
-				<div class="flex items-start space-x-4">
-					<div class="flex-shrink-0">
-						<img
-							src="/OpenACC-logo-color.png"
-							alt="OpenACC Logo"
-							class="w-20 h-12 object-contain"
-						/>
-					</div>
-					<div class="flex-1">
-						<h3 class="font-semibold text-lg mb-2">
-							<a
-								aria-label="OpenACC V&V project"
-								class="cactus-link"
-								href="https://crpl.cis.udel.edu/oaccvv/"
-								rel="noopener noreferrer"
-								target="_blank"
-							>
-								OpenACC Validation and Verification (V&V) Testsuite
-							</a>
-						</h3>
-						<p class="mb-3">
-							Leading the development of a comprehensive validation and verification testsuite for the OpenACC 
-							Programming Model. This project ensures compiler compliance and reliability across diverse GPU 
-							architectures, supporting the broader HPC community.
-						</p>
-						<div class="flex items-center space-x-4">
-							<a
-								class="flex items-center space-x-1 text-sm px-3 py-1 bg-blue-100 text-blue-800 rounded hover:bg-blue-200"
-								href="https://github.com/OpenACCUserGroup/OpenACCV-V"
-								target="_blank"
-							>
-								<Icon aria-hidden="true" class="h-4 w-4" focusable="false" name="mdi:github" />
-								<span>GitHub</span>
-							</a>
-							<span class="text-sm text-gray-600">Status: Active Development</span>
+			{
+				researchProjects.filter(project => project.id !== 'llm4vv').map((project) => (
+					<div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
+						<div class="flex items-start space-x-4">
+							{project.logo && (
+								<div class="flex-shrink-0">
+									<img
+										src={project.logo}
+										alt={`${project.title} Logo`}
+										class="w-20 h-12 object-contain"
+									/>
+								</div>
+							)}
+							<div class="flex-1">
+								<h3 class="font-semibold text-lg mb-2">
+									{project.links.length > 0 ? (
+										<a
+											aria-label={project.title}
+											class="cactus-link"
+											href={project.links[0].url}
+											rel="noopener noreferrer"
+											target="_blank"
+										>
+											{project.title}
+										</a>
+									) : (
+										project.title
+									)}
+								</h3>
+								<p class="mb-3">
+									{project.description}
+								</p>
+								<div class="flex items-center flex-wrap gap-4">
+									{project.links.map((link) => {
+										const iconMap = {
+											github: "mdi:github",
+											gitlab: "mdi:gitlab", 
+											website: "mdi:web",
+											paper: "mdi:file-document"
+										};
+										const colorMap = {
+											github: "bg-blue-100 text-blue-800 hover:bg-blue-200",
+											gitlab: "bg-orange-100 text-orange-800 hover:bg-orange-200",
+											website: "bg-green-100 text-green-800 hover:bg-green-200",
+											paper: "bg-purple-100 text-purple-800 hover:bg-purple-200"
+										};
+										
+										return (
+											<a
+												class={`flex items-center space-x-1 text-sm px-3 py-1 rounded ${colorMap[link.type]}`}
+												href={link.url}
+												target="_blank"
+												rel="noopener noreferrer"
+											>
+												<Icon aria-hidden="true" class="h-4 w-4" focusable="false" name={iconMap[link.type]} />
+												<span>{link.label}</span>
+											</a>
+										);
+									})}
+									<span class="text-sm text-gray-600">Status: {project.status}</span>
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-
-			<div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
-				<div class="flex items-start space-x-4">
-					<div class="flex-shrink-0">
-						<img
-							src="/OpenMP_logo.png"
-							alt="OpenMP Logo"
-							class="w-20 h-12 object-contain"
-						/>
-					</div>
-					<div class="flex-1">
-						<h3 class="font-semibold text-lg mb-2">
-							<a
-								aria-label="S4PST project"
-								class="cactus-link"
-								href="https://s4pst.org"
-								rel="noopener noreferrer"
-								target="_blank"
-							>
-								Stewardship for Programming Systems and Tools (S4PST)
-							</a>
-						</h3>
-						<p class="mb-3">
-							Contributing to a predictive ecosystem for HPC software sustainability. Our CI/CD pipeline for 
-							LLVM Clang and new-Flang's OpenMP Offloading implementation runs comprehensive test suites and 
-							benchmarks on cutting-edge GPU hardware including NVIDIA H100, GH200, and AMD MI210/MI300A.
-						</p>
-						<div class="flex items-center space-x-4">
-							<a
-								class="flex items-center space-x-1 text-sm px-3 py-1 bg-green-100 text-green-800 rounded hover:bg-green-200"
-								href="https://gitlab.e4s.io/uo-public/llvm-openmp-offloading-v2/-/pipelines"
-								target="_blank"
-							>
-								<Icon aria-hidden="true" class="h-4 w-4" focusable="false" name="mdi:gitlab" />
-								<span>GitLab</span>
-							</a>
-							<span class="text-sm text-gray-600">Status: Production</span>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-6">
-				<div class="flex-1">
-					<h3 class="font-semibold text-lg mb-2">LLM4VV: AI-Driven Compiler Testing</h3>
-					<p class="mb-3">
-						Developing novel approaches to leverage Large Language Models for automated test generation 
-						and validation in compiler verification workflows. This research explores the intersection 
-						of AI and systems software to improve testing efficiency and coverage.
-					</p>
-					<div class="flex items-center space-x-4">
-						<a
-							class="flex items-center space-x-1 text-sm px-3 py-1 bg-purple-100 text-purple-800 rounded hover:bg-purple-200"
-							href="https://doi.org/10.48550/arXiv.2310.04963"
-							target="_blank"
-						>
-							<Icon aria-hidden="true" class="h-4 w-4" focusable="false" name="mdi:file-document" />
-							<span>arXiv Paper</span>
-						</a>
-						<span class="text-sm text-gray-600">Status: Research Phase</span>
-					</div>
-				</div>
-			</div>
+				))
+			}
 		</div>
 	</section>
 </PageLayout>

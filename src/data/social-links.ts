@@ -14,6 +14,11 @@ export const socialLinks: {
 		link: "https://www.linkedin.com/in/aaron-jarmusch/",
 		name: "mdi:linkedin",
 	},
+	{
+		friendlyName: "Google Scholar",
+		link: "https://scholar.google.com/citations?user=YOUR_USER_ID",
+		name: "mdi:school",
+	},
 	// {
 	// 	friendlyName: "Twitter",
 	// 	link: "https://twitter.com/aaronjarmusch",
@@ -23,6 +28,5 @@ export const socialLinks: {
 		friendlyName: "BlueSky",
 		link: "https://bsky.app/profile/ajarmusch.bsky.social",
 		name: "ri:bluesky-fill",
-
 	},
 ];

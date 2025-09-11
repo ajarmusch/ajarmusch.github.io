@@ -12,13 +12,13 @@ import { awardsTech } from "@/data/awards";
 				<h2 class="text-xl font-semibold mb-4">Education</h2>
 				<div class="space-y-4">
 					<div class="border-l-4 border-blue-500 pl-4">
-						<h3 class="font-semibold">Ph.D. in Computer Science</h3>
+						<h3 class="font-semibold">Ph.D. in Computer Science (2024 - 2028)</h3>
 						<p class="text-sm text-gray-600">University of Delaware</p>
 						<p class="text-sm">Advisor: Dr. Sunita Chandrasekaran</p>
 						<p class="text-sm">Focus: High Performance Computing, Compiler Validation, GPU Programming</p>
 					</div>
 					<div class="border-l-4 border-green-500 pl-4">
-						<h3 class="font-semibold">Bachelor of Science in Electrical Engineering</h3>
+						<h3 class="font-semibold">Bachelor of Science in Electrical Engineering (2023)</h3>
 						<p class="text-sm text-gray-600">University of Delaware</p>
 					</div>
 				</div>
@@ -29,17 +29,23 @@ import { awardsTech } from "@/data/awards";
 				<h2 class="text-xl font-semibold mb-4">Honors & Awards</h2>
 				<div class="space-y-4">
 					{
-						awardsTech.map((award, index) => {
-							const colors = ['yellow', 'blue', 'green', 'purple', 'red'];
-							const color = colors[index % colors.length];
+						awardsTech.map((award) => {
+							// Extract year from title
+							const yearMatch = award.title.match(/(19|20)\d{2}/);
+							const year = yearMatch ? yearMatch[0] : '';
+							const titleWithoutYear = award.title.replace(/\s*(19|20)\d{2}/, '').replace(/\s*-\s*/, ' - ');
+							
 							return (
-								<div class={`border-l-4 border-${color}-500 pl-4`}>
-									<h3 class="font-bold text-lg">
-										<a href={award.href} class="cactus-link" target="_blank">
-											{award.title}
+								<div class="flex gap-4">
+									<span class="text-sm text-gray-600 min-w-[120px]">
+										{year ? `[${year}]` : ''}
+									</span>
+									<span class="text-sm">
+										<a href={award.href} class="cactus-link font-medium" target="_blank" rel="noopener noreferrer">
+											{titleWithoutYear}
 										</a>
-									</h3>
-									<p class="text-sm text-gray-500 mt-1">{award.desc}</p>
+										{award.desc && ` - ${award.desc}`}
+									</span>
 								</div>
 							);
 						})
@@ -99,40 +105,6 @@ import { awardsTech } from "@/data/awards";
 							<span class="px-2 py-1 bg-green-100 text-green-800 rounded text-sm">GPU Computing</span>
 						</div>
 					</div>
-				</div>
-			</div>
-
-			<!-- Contact -->
-			<div>
-				<h2 class="text-xl font-semibold mb-4">Connect</h2>
-				<p class="mb-4">
-					I'm always interested in discussing HPC research, collaboration opportunities, 
-					and advancing the field of parallel computing. Feel free to reach out!
-				</p>
-				<div class="flex space-x-4">
-					<a
-						href="mailto:ajarmusch@udel.edu"
-						class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-					>
-						<Icon aria-hidden="true" class="h-4 w-4 mr-2" focusable="false" name="mdi:email" />
-						Email
-					</a>
-					<a
-						href="https://www.linkedin.com/in/aaron-jarmusch/"
-						target="_blank"
-						class="inline-flex items-center px-4 py-2 bg-blue-800 text-white rounded hover:bg-blue-900"
-					>
-						<Icon aria-hidden="true" class="h-4 w-4 mr-2" focusable="false" name="mdi:linkedin" />
-						LinkedIn
-					</a>
-					<a
-						href="https://github.com/ajarmusch"
-						target="_blank"
-						class="inline-flex items-center px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-900"
-					>
-						<Icon aria-hidden="true" class="h-4 w-4 mr-2" focusable="false" name="mdi:github" />
-						GitHub
-					</a>
 				</div>
 			</div>
 		</div>

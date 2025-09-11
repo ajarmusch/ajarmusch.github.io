@@ -1,91 +1,204 @@
 ---
 import PageLayout from "@/layouts/Base.astro";
-import { publicationsTech } from "@/data/publications";
-import { awardsTech } from "@/data/awards";
+import { Icon } from "astro-icon/components";
+import { publicationsTech, getDisplayPublication } from "@/data/publications";
 import { postersTech } from "@/data/posters";
 import { talksTech } from "@/data/talks";
 
-
 const meta = {
-	description: "Aaron Jarmusch's personal website.",
-	title: "10 Seconds of Fame",
+	description: "Aaron Jarmusch's academic publications, posters, and talks.",
+	title: "Publications & Presentations",
 };
+
+// Helper function to bold author names
+function boldAuthorName(authors: string[], targetName: string = "Aaron Jarmusch"): string {
+	return authors.map(author => 
+		author.includes(targetName) ? `<strong>${author}</strong>` : author
+	).join(", ");
+}
 
 ---
 
 <PageLayout meta={meta}>
-	<div class="space-y-6">
-		<h1 class="title">10 Seconds of Fame</h1>
-		<p>
-			trying to learn more about my past... stalker&nbsp;😁&nbsp;
-		</p>
-		<h2 class="mb-4 text-xl">Publications:</h1>
-		<dl class="space-y-4">
-			{
-				publicationsTech.map((pub) => (
-					<div class="flex flex-col gap-2 sm:flex-row">
-						<dt>
-							<span class="flex">
-								<a class="cactus-link" href={pub.url} rel="" target="_blank">
-									{pub.shortTitle}
-								</a>
-								: {pub.title}
-							</span>
-						</dt>
-					</div>
-				))
-			}
-		</dl>
-		<h2 class="mb-4 text-xl">Awards:</h1>
-		<dl class="space-y-4">
-			{
-				awardsTech.map(({ desc, href, title }) => (
-					<div class="flex flex-col gap-2 sm:w-full">
-						<dt>
-							<span class="">
-								<a class="cactus-link" href={href} rel="" target="_blank">
-									{title} 
-								</a>
-								: {desc}
-							</span>
-						</dt>
-					</div>
-				))
-			}
-		</dl>
-		<h2 class="mb-4 text-xl">Posters:</h1>
-		<dl class="space-y-4">
-			{
-				postersTech.map(({ desc, href, title }) => (
-					<div class="flex flex-col gap-2 sm:w-full">
-						<dt>
-							<span class="">
-								<a class="cactus-link" href={href} rel="" target="_blank">
-									{title}
-								</a>
-								: {desc}
-							</span>
-						</dt>
-					</div>
-				))
-			}
-		</dl>
-		<h2 class="mb-4 text-xl">Talks:</h1>
-		<dl class="space-y-4">
-			{
-				talksTech.map(({ desc, href, title }) => (
-					<div class="flex flex-col gap-2 sm:w-full">
-						<dt>
-							<span class="">
-								<a class="cactus-link" href={href} rel="" target="_blank">
-									{title}
-								</a>
-								: {desc}
-							</span>
-						</dt>
-					</div>
-				))
-			}
-		</dl>
+	<div class="space-y-8">
+		<div class="text-center">
+			<h1 class="title mb-4">Publications & Presentations</h1>
+			<p class="text-gray-600 max-w-2xl mx-auto">
+				A comprehensive collection of my research publications, conference presentations, and academic posters showcasing work in High Performance Computing, GPU programming, and compiler validation.
+			</p>
+		</div>
+
+		<!-- Publications Section -->
+		<section>
+			<h2 class="text-2xl font-semibold mb-6 border-b border-gray-300 pb-2">Publications</h2>
+			<div class="space-y-6">
+				{
+					publicationsTech.map((pub) => {
+						const displayPub = getDisplayPublication(pub);
+						return (
+							<article class="bg-gray-50 rounded-lg p-6 shadow-sm">
+								<div class="space-y-3">
+									<!-- Title -->
+									<h3 class="text-lg font-semibold text-accent-2">
+										<a class="cactus-link hover:underline" href={pub.url} target="_blank" rel="noopener noreferrer">
+											{pub.title}
+										</a>
+									</h3>
+									
+									<!-- Authors -->
+									<p class="text-sm" set:html={boldAuthorName(pub.authors)}></p>
+									
+									<!-- Venue and Date -->
+									<div class="flex flex-wrap gap-4 text-sm text-gray-600">
+										<span class="font-medium">{displayPub.venue}</span>
+										<span>•</span>
+										<span class="text-accent-2 font-medium">
+											{displayPub.month ? `${displayPub.month} ${displayPub.year}` : displayPub.year}
+										</span>
+										{pub.status === 'preprint' && (
+											<>
+												<span>•</span>
+												<span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Preprint</span>
+											</>
+										)}
+										{pub.award && (
+											<>
+												<span>•</span>
+												<span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">{pub.award}</span>
+											</>
+										)}
+									</div>
+									
+									<!-- Links -->
+									<div class="flex flex-wrap gap-3 text-sm">
+										<a href={pub.url} class="inline-flex items-center gap-1 cactus-link" target="_blank" rel="noopener noreferrer">
+											<Icon name="mdi:file-document-outline" class="h-4 w-4" />
+											Paper
+										</a>
+										{pub.pdfUrl && (
+											<a href={pub.pdfUrl} class="inline-flex items-center gap-1 cactus-link" target="_blank" rel="noopener noreferrer">
+												<Icon name="mdi:file-pdf-box" class="h-4 w-4" />
+												PDF
+											</a>
+										)}
+										{pub.codeUrl && (
+											<a href={pub.codeUrl} class="inline-flex items-center gap-1 cactus-link" target="_blank" rel="noopener noreferrer">
+												<Icon name="mdi:code-braces" class="h-4 w-4" />
+												Code
+											</a>
+										)}
+										{pub.preprintPublication && pub.printPublication && (
+											<a href={pub.preprintPublication.url} class="inline-flex items-center gap-1 cactus-link" target="_blank" rel="noopener noreferrer">
+												<Icon name="mdi:file-document-outline" class="h-4 w-4" />
+												Preprint
+											</a>
+										)}
+									</div>
+								</div>
+							</article>
+						);
+					})
+				}
+			</div>
+		</section>
+
+		<!-- Posters Section -->
+		<section>
+			<h2 class="text-2xl font-semibold mb-6 border-b border-gray-300 pb-2">Conference Posters</h2>
+			<div class="space-y-4">
+				{
+					postersTech.map((poster) => {
+						const yearMatch = poster.desc.match(/(19|20)\d{2}/);
+						const eventName = poster.desc.replace(/\s+(19|20)\d{2}/, '').replace(/\s*-\s*Won.*$/, '');
+						const year = yearMatch ? yearMatch[0] : '';
+						const hasAward = poster.desc.includes('Won');
+						
+						return (
+							<article class="bg-gray-50 rounded-lg p-5 shadow-sm">
+								<div class="space-y-2">
+									<!-- Title -->
+									<h3 class="text-lg font-medium text-accent-2">
+										<a class="cactus-link hover:underline" href={poster.href} target="_blank" rel="noopener noreferrer">
+											{poster.title}
+										</a>
+									</h3>
+									
+									<!-- Event/Conference and Date -->
+									<div class="flex flex-wrap gap-2 items-center text-sm text-gray-600">
+										<span class="font-medium">{eventName}</span>
+										{year && (
+											<>
+												<span>•</span>
+												<span class="text-accent-2 font-medium">{year}</span>
+											</>
+										)}
+										{hasAward && (
+											<>
+												<span>•</span>
+												<span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">Award Winner</span>
+											</>
+										)}
+									</div>
+									
+									<!-- Link -->
+									<div class="pt-1">
+										<a href={poster.href} class="inline-flex items-center gap-1 cactus-link text-sm" target="_blank" rel="noopener noreferrer">
+											<Icon name="mdi:presentation" class="h-4 w-4" />
+											View Poster
+										</a>
+									</div>
+								</div>
+							</article>
+						);
+					})
+				}
+			</div>
+		</section>
+
+		<!-- Talks Section -->
+		<section>
+			<h2 class="text-2xl font-semibold mb-6 border-b border-gray-300 pb-2">Invited Talks & Presentations</h2>
+			<div class="space-y-4">
+				{
+					talksTech.map((talk) => {
+						const yearMatch = talk.desc.match(/(19|20)\d{2}/);
+						const eventName = talk.desc.replace(/\s+(19|20)\d{2}/, '');
+						const year = yearMatch ? yearMatch[0] : '';
+						
+						return (
+							<article class="bg-gray-50 rounded-lg p-5 shadow-sm">
+								<div class="space-y-2">
+									<!-- Title -->
+									<h3 class="text-lg font-medium text-accent-2">
+										<a class="cactus-link hover:underline" href={talk.href} target="_blank" rel="noopener noreferrer">
+											{talk.title}
+										</a>
+									</h3>
+									
+									<!-- Event/Venue and Date -->
+									<div class="flex flex-wrap gap-2 items-center text-sm text-gray-600">
+										<span class="font-medium">{eventName}</span>
+										{year && (
+											<>
+												<span>•</span>
+												<span class="text-accent-2 font-medium">{year}</span>
+											</>
+										)}
+									</div>
+									
+									<!-- Link -->
+									<div class="pt-1">
+										<a href={talk.href} class="inline-flex items-center gap-1 cactus-link text-sm" target="_blank" rel="noopener noreferrer">
+											<Icon name={talk.href.includes('zoom') ? "mdi:video" : "mdi:information-outline"} class="h-4 w-4" />
+											{talk.href.includes('zoom') ? 'Recording' : 'Details'}
+										</a>
+									</div>
+								</div>
+							</article>
+						);
+					})
+				}
+			</div>
+		</section>
 	</div>
 </PageLayout>
