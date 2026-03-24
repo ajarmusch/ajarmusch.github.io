@@ -99,7 +99,13 @@ export const researchProjects: ResearchProject[] = [
     description: "Developing unified testing methodologies for GPU computing across NVIDIA (H100, GH200) and AMD (MI300A) architectures. Ensures consistent performance and reliability for HPC applications across diverse hardware platforms.",
     status: "Active Development",
     technologies: ["CUDA", "HIP", "ROCm", "GPU Computing", "Performance Analysis", "Cross-Platform Testing"],
-    links: [],
+    links: [
+      {
+        type: "paper",
+        url: "https://arxiv.org/abs/2602.10262",
+        label: "MI300A FP8 & Sparsity (arXiv)"
+      }
+    ],
     category: "GPU Computing"
   }
 ];

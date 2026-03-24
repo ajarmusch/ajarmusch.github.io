@@ -64,6 +64,34 @@ export interface Publication {
 
 export const publicationsTech: Publication[] = [
   {
+    title: "Execution-Centric Characterization of FP8 Matrix Cores, Asynchronous Execution, and Structured Sparsity on AMD MI300A",
+    shortTitle: "MI300A FP8 & Structured Sparsity",
+    authors: ["Aaron Jarmusch", "Connor Vitz", "Sunita Chandrasekaran"],
+    year: 2026,
+    month: "February",
+    venue: "arXiv preprint",
+    venueShort: "arXiv",
+    type: "preprint",
+    status: "preprint",
+    doi: "10.48550/arXiv.2602.10262",
+    arxivId: "2602.10262",
+    url: "https://doi.org/10.48550/arXiv.2602.10262",
+    pdfUrl: "https://arxiv.org/pdf/2602.10262",
+    preprintPublication: {
+      venue: "arXiv preprint",
+      arxivId: "2602.10262",
+      doi: "10.48550/arXiv.2602.10262",
+      url: "https://doi.org/10.48550/arXiv.2602.10262",
+      pdfUrl: "https://arxiv.org/pdf/2602.10262"
+    },
+    abstract: "The AMD MI300A APU integrates CDNA3 GPUs with high-bandwidth memory and advanced accelerator features: FP8 matrix cores, asynchronous compute engines (ACE), and 2:4 structured sparsity. These capabilities are increasingly relied upon by modern HPC and HPC-AI workloads, yet their execution characteristics and system-level implications remain insufficiently understood. In this paper, we present an execution-centric characterization of FP8 matrix execution, ACE concurrency, and structured sparsity on MI300A using targeted microbenchmarks. We quantify occupancy thresholds, fairness, throughput trade-offs under concurrent execution, and context-dependent sparsity benefits. We evaluate representative case studies - transformer-style, concurrent, and mixed-precision kernels - to show how these effects translate into application-level performance and predictability. Our results provide practical guidance for occupancy-aware scheduling, concurrency decisions, and sparsity enablement on MI300A-class unified nodes.",
+    keywords: ["AMD MI300A", "FP8", "Structured Sparsity", "Microbenchmarks", "GPU Computing", "HPC"],
+    bibtexKey: "jarmusch2026mi300a-fp8",
+    researchTags: ["gpu-validation-framework", "s4pst"],
+    primaryProject: "gpu-validation-framework",
+    featured: true
+  },
+  {
     title: "Dissecting the NVIDIA Blackwell Architecture with Microbenchmarks",
     shortTitle: "Blackwell Architecture Analysis",
     authors: ["Aaron Jarmusch", "Nathan Graddon", "Sunita Chandrasekaran"],
