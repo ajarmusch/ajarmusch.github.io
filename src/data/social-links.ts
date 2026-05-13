@@ -16,7 +16,7 @@ export const socialLinks: {
 	},
 	{
 		friendlyName: "Google Scholar",
-		link: "https://scholar.google.com/citations?user=YOUR_USER_ID",
+		link: "https://scholar.google.com/citations?user=35NUiPsAAAAJ",
 		name: "mdi:school",
 	},
 	// {
