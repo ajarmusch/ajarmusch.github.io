@@ -1,0 +1,2 @@
+# fetch_notion.py uses only the Python standard library.
+# This file exists for CI to have a place to look for deps.

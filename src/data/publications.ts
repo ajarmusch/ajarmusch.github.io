@@ -1,4 +1,12 @@
 // src/data/publications.ts
+//
+// Single source of truth: src/data/publications.json (synced from Notion by
+// .github/workflows/notion-sync.yml). The hardcoded `publicationsHardcoded`
+// array below is kept as a safety fallback: if publications.json is empty
+// (e.g. before the first sync runs, or if the sync fails), the page still
+// renders the canonical list.
+
+import publicationsFromNotion from "./publications.json";
 
 export interface Publication {
   // Basic Information
@@ -62,7 +70,46 @@ export interface Publication {
   award?: string;
 }
 
-export const publicationsTech: Publication[] = [
+// Adapter: convert Notion-shaped JSON entries → Publication interface.
+function adaptNotionPublication(p: any): Publication {
+  return {
+    title: p.title ?? "",
+    shortTitle: p.shortTitle ?? p.title ?? "",
+    authors: p.authors ?? [],
+    year: p.year ?? 0,
+    month: p.month,
+    venue: p.venue ?? "",
+    venueShort: p.venueShort ?? p.venue ?? "",
+    type: (p.type ?? "preprint") as Publication["type"],
+    status: (p.status ?? "preprint") as Publication["status"],
+    doi: p.doi,
+    arxivId: p.arxivId,
+    url: p.url ?? "",
+    pdfUrl: p.pdfUrl,
+    codeUrl: p.codeUrl,
+    dataUrl: undefined,
+    printPublication: p.printPublication,
+    preprintPublication: p.preprintPublication,
+    volume: p.volume,
+    number: p.number,
+    pages: p.pages,
+    publisher: p.publisher,
+    abstract: p.abstract ?? "",
+    keywords: p.keywords ?? p.topics ?? [],
+    bibtexKey: p.bibtexKey ?? "",
+    researchTags: p.researchTags ?? [],
+    primaryProject: p.primaryProject,
+    featured: p.featured ?? true,
+    award: p.award,
+  };
+}
+
+const publicationsFromJson: Publication[] = (publicationsFromNotion as any[]).map(
+  adaptNotionPublication,
+);
+
+// Hardcoded fallback list — used when publications.json is empty.
+const publicationsHardcoded: Publication[] = [
   {
     title: "Execution-Centric Characterization of FP8 Matrix Cores, Asynchronous Execution, and Structured Sparsity on AMD MI300A",
     shortTitle: "MI300A FP8 & Structured Sparsity",
@@ -267,8 +314,12 @@ export const publicationsTech: Publication[] = [
   }
 ];
 
+// Canonical export — Notion data when present, hardcoded fallback otherwise.
+export const publicationsTech: Publication[] =
+  publicationsFromJson.length > 0 ? publicationsFromJson : publicationsHardcoded;
+
 // Legacy export for backward compatibility
-export const publicationsLegacy: { desc: string; href: string; title: string }[] = 
+export const publicationsLegacy: { desc: string; href: string; title: string }[] =
   publicationsTech.map(pub => ({
     desc: pub.title,
     href: pub.url,

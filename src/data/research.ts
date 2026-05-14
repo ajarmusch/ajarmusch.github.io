@@ -1,4 +1,13 @@
 // src/data/research.ts
+//
+// researchProjects is sourced from src/data/projects.json (synced from Notion
+// by notion-sync.yml). The hardcoded `researchProjectsHardcoded` array below
+// is the safety fallback used when the JSON is empty.
+//
+// researchAreas, futureDirections, researchImpact remain hardcoded — they're
+// closer to site-config than to data that changes regularly.
+
+import projectsFromNotion from "./projects.json";
 
 export interface ResearchProject {
   id: string;
@@ -15,7 +24,32 @@ export interface ResearchProject {
   category: "GPU Computing" | "HPC Systems" | "AI-Driven Testing" | "Compiler Validation";
 }
 
-export const researchProjects: ResearchProject[] = [
+// Adapter: convert Notion projects.json entry → ResearchProject interface.
+function adaptNotionProject(p: any): ResearchProject {
+  // Only surface projects flagged "Show on website" — Notion does this at fetch
+  // time but we defend here too in case anyone bypasses the script.
+  return {
+    id: p.id ?? "",
+    title: p.title ?? "",
+    description: p.description ?? "",
+    status: (p.status ?? "Active Development") as ResearchProject["status"],
+    technologies: p.technologies ?? p.tags ?? [],
+    links: (p.links ?? []).map((l: any) => ({
+      type: l.type as ResearchProject["links"][number]["type"],
+      url: l.url,
+      label: l.label,
+    })),
+    logo: p.logo,
+    category: (p.category ?? "GPU Computing") as ResearchProject["category"],
+  };
+}
+
+const researchProjectsFromJson: ResearchProject[] = (projectsFromNotion as any[]).map(
+  adaptNotionProject,
+);
+
+// Hardcoded fallback list — used when projects.json is empty.
+const researchProjectsHardcoded: ResearchProject[] = [
   {
     id: "openacc-vv",
     title: "OpenACC Validation and Verification (V&V) Testsuite",
@@ -109,6 +143,12 @@ export const researchProjects: ResearchProject[] = [
     category: "GPU Computing"
   }
 ];
+
+// Canonical export — Notion data when present, hardcoded fallback otherwise.
+export const researchProjects: ResearchProject[] =
+  researchProjectsFromJson.length > 0
+    ? researchProjectsFromJson
+    : researchProjectsHardcoded;
 
 export const researchAreas = [
   {
