@@ -1,0 +1,221 @@
+---
+import PageLayout from "@/layouts/Base.astro";
+import { Icon } from "astro-icon/components";
+import { awardsTech } from "@/data/awards";
+
+const meta = {
+	description: "Curriculum Vitae for Aaron Jarmusch — Ph.D. student in Computer Science at the University of Delaware, working on High Performance Computing, GPU architectures, and compiler validation.",
+	title: "CV",
+};
+
+// Drop a current CV PDF at: public/Aaron_Jarmusch_CV.pdf
+const cvPdfHref = "/Aaron_Jarmusch_CV.pdf";
+---
+
+<PageLayout meta={meta}>
+	<section>
+		<div class="flex flex-wrap items-end justify-between gap-4 mb-8">
+			<div>
+				<h1 class="title mb-2">Curriculum Vitae</h1>
+				<p class="text-sm text-gray-600 dark:text-gray-400">Last updated May 2026</p>
+			</div>
+			<a
+				href={cvPdfHref}
+				class="inline-flex items-center gap-2 px-4 py-2 bg-accent text-bgColor rounded font-medium hover:opacity-90 transition-opacity"
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				<Icon name="mdi:file-pdf-box" class="h-5 w-5" />
+				Download CV (PDF)
+			</a>
+		</div>
+
+		<div class="space-y-10">
+			<div>
+				<h2 class="text-xl font-semibold mb-4 border-b border-gray-200 dark:border-gray-700 pb-1">Education</h2>
+				<div class="space-y-4">
+					<div class="border-l-4 border-blue-500 pl-4">
+						<h3 class="font-semibold">Ph.D. in Computer Science <span class="font-normal text-gray-600 dark:text-gray-400">(2024 – 2028 expected)</span></h3>
+						<p class="text-sm text-gray-600 dark:text-gray-400">University of Delaware</p>
+						<p class="text-sm">Advisor: Dr. Sunita Chandrasekaran</p>
+						<p class="text-sm">Passed Ph.D. preliminary examination (November 2025)</p>
+						<p class="text-sm">Focus: High Performance Computing, Compiler Validation, GPU Programming</p>
+					</div>
+					<div class="border-l-4 border-green-500 pl-4">
+						<h3 class="font-semibold">Bachelor of Science in Electrical Engineering <span class="font-normal text-gray-600 dark:text-gray-400">(2023)</span></h3>
+						<p class="text-sm text-gray-600 dark:text-gray-400">University of Delaware</p>
+					</div>
+				</div>
+			</div>
+
+			<div>
+				<h2 class="text-xl font-semibold mb-4 border-b border-gray-200 dark:border-gray-700 pb-1">Professional Experience</h2>
+				<div class="space-y-6">
+					<div class="border-l-4 border-blue-500 pl-4">
+						<h3 class="font-semibold">Software Engineer</h3>
+						<p class="text-sm text-gray-600 dark:text-gray-400">University of Delaware, Exascale Computing Project SOLLVE · May 2023 – December 2023 · Newark, DE</p>
+						<ul class="text-sm mt-2 space-y-1 list-disc list-inside marker:text-accent">
+							<li>Shipped bug fixes and perf optimizations in the LLVM OpenMP offloading runtime, impacting <strong>15+ DOE exascale applications</strong>.</li>
+							<li>Authored automated testing protocols for multi-GPU systems, <strong>cutting manual testing overhead by ~60%</strong> across national-lab facilities.</li>
+							<li>Drove collaborative debugging with AMD and NVIDIA compiler teams to establish heterogeneous-computing best practices.</li>
+						</ul>
+					</div>
+					<div class="border-l-4 border-purple-500 pl-4">
+						<h3 class="font-semibold">Undergraduate Researcher</h3>
+						<p class="text-sm text-gray-600 dark:text-gray-400">University of Delaware, CRPL · September 2020 – May 2023 · Newark, DE</p>
+						<ul class="text-sm mt-2 space-y-1 list-disc list-inside marker:text-accent">
+							<li>Led the <strong>OpenACC V&amp;V testsuite</strong> covering <strong>OpenACC 3.0+</strong> across <strong>4 vendor compilers</strong> (NVIDIA HPC SDK, GCC, Clang/LLVM, Cray).</li>
+							<li>Surfaced compiler bugs and spec ambiguities that influenced OpenACC standard revisions.</li>
+							<li>Operated jobs on <strong>Summit, Frontier, and Perlmutter</strong> for large-scale compiler validation.</li>
+							<li>Coordinated cross-institutional collaborators and shipped results via top HPC venues.</li>
+						</ul>
+					</div>
+					<div class="border-l-4 border-green-500 pl-4">
+						<h3 class="font-semibold">Teaching Assistant</h3>
+						<p class="text-sm text-gray-600 dark:text-gray-400">University of Delaware, Computer &amp; Information Sciences · August 2022 – May 2023 · Newark, DE</p>
+						<ul class="text-sm mt-2 space-y-1 list-disc list-inside marker:text-accent">
+							<li>Supported Computer Science lab instruction, adapting communication to diverse learning styles.</li>
+							<li>Provided technical assistance and contributed to coding projects with interactive in-class activities.</li>
+						</ul>
+					</div>
+					<div class="border-l-4 border-orange-500 pl-4">
+						<h3 class="font-semibold">Undergraduate Researcher (REU)</h3>
+						<p class="text-sm text-gray-600 dark:text-gray-400">Indiana University · Summer 2021 · Bloomington, IN (remote)</p>
+						<ul class="text-sm mt-2 space-y-1 list-disc list-inside marker:text-accent">
+							<li>Ran OMP SOLLVE and OpenACC V&amp;V workloads on Jetstream / XSEDE cloud resources.</li>
+							<li>Validated runtime conformance to parallel programming specifications.</li>
+						</ul>
+					</div>
+					<div class="border-l-4 border-red-500 pl-4">
+						<h3 class="font-semibold">Undergraduate Researcher (REU)</h3>
+						<p class="text-sm text-gray-600 dark:text-gray-400">Indiana University · Summer 2020 · Bloomington, IN (remote)</p>
+						<ul class="text-sm mt-2 space-y-1 list-disc list-inside marker:text-accent">
+							<li>Built a Python web-scraper to collect and rank HPC systems using SPEC benchmarks.</li>
+							<li>Deployed and maintained the ranking site on Jetstream cloud infrastructure.</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div>
+				<h2 class="text-xl font-semibold mb-4 border-b border-gray-200 dark:border-gray-700 pb-1">Honors &amp; Awards</h2>
+				<div class="space-y-3">
+					{awardsTech.map((award) => {
+						const yearMatch = award.title.match(/(19|20)\d{2}/);
+						const year = yearMatch ? yearMatch[0] : '';
+						const titleWithoutYear = award.title.replace(/\s*(19|20)\d{2}/, '').replace(/\s*-\s*/, ' — ');
+						return (
+							<div class="flex gap-4">
+								<span class="text-sm text-gray-600 dark:text-gray-400 min-w-[80px] tabular-nums">{year ? year : ''}</span>
+								<span class="text-sm">
+									<a href={award.href} class="cactus-link font-medium" target="_blank" rel="noopener noreferrer">{titleWithoutYear}</a>
+									{award.desc && <span class="text-gray-600 dark:text-gray-400"> — {award.desc}</span>}
+								</span>
+							</div>
+						);
+					})}
+				</div>
+			</div>
+
+			<div>
+				<h2 class="text-xl font-semibold mb-4 border-b border-gray-200 dark:border-gray-700 pb-1">Professional Training</h2>
+				<div class="space-y-5">
+					<div class="border-l-4 border-blue-500 pl-4">
+						<h3 class="font-semibold">Argonne Training Program on Extreme-Scale Computing (ATPESC)</h3>
+						<p class="text-sm text-gray-600 dark:text-gray-400">Argonne National Laboratory · Summer 2025 · St. Charles, IL</p>
+						<p class="text-sm mt-1">Advanced training in performance-portable programming across heterogeneous architectures (CPUs, GPUs, quantum processors), debugging/profiling tools, software sustainability, and ML for scientific computing.</p>
+					</div>
+					<div class="border-l-4 border-green-500 pl-4">
+						<h3 class="font-semibold">HenStreet Hacks · SallieMae Track</h3>
+						<p class="text-sm text-gray-600 dark:text-gray-400">University of Delaware · Summer 2025</p>
+					</div>
+					<div class="border-l-4 border-purple-500 pl-4">
+						<h3 class="font-semibold">UD + ATOM Hackathon</h3>
+						<p class="text-sm text-gray-600 dark:text-gray-400">University of Delaware &amp; ATOM · Summer 2024</p>
+					</div>
+					<div class="border-l-4 border-orange-500 pl-4">
+						<h3 class="font-semibold">HenHacks · govAIde</h3>
+						<p class="text-sm text-gray-600 dark:text-gray-400">University of Delaware · 2024</p>
+						<p class="text-sm mt-1">Built an AI-powered platform (Streamlit + GPT-3.5) to streamline access to government aid, jobs, and housing for underserved communities.</p>
+					</div>
+				</div>
+			</div>
+
+			<div>
+				<h2 class="text-xl font-semibold mb-4 border-b border-gray-200 dark:border-gray-700 pb-1">Technical Expertise</h2>
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+					<div>
+						<h3 class="font-semibold mb-2 text-sm uppercase tracking-wide text-gray-600 dark:text-gray-400">Programming Languages</h3>
+						<div class="flex flex-wrap gap-2">
+							{["C/C++", "Python", "CUDA", "HIP", "OpenACC", "OpenMP", "Fortran"].map((s) => (
+								<span class="px-2 py-1 bg-blue-100 text-blue-800 rounded text-sm">{s}</span>
+							))}
+						</div>
+					</div>
+					<div>
+						<h3 class="font-semibold mb-2 text-sm uppercase tracking-wide text-gray-600 dark:text-gray-400">Tools &amp; Platforms</h3>
+						<div class="flex flex-wrap gap-2">
+							{["LLVM/Clang", "Git/GitLab", "GitLab CI", "GitHub Actions", "Docker", "Singularity", "SLURM", "HPC Clusters"].map((s) => (
+								<span class="px-2 py-1 bg-green-100 text-green-800 rounded text-sm">{s}</span>
+							))}
+						</div>
+					</div>
+					<div>
+						<h3 class="font-semibold mb-2 text-sm uppercase tracking-wide text-gray-600 dark:text-gray-400">Hardware Targets</h3>
+						<div class="flex flex-wrap gap-2">
+							{["NVIDIA H100", "GH200", "RTX 5080 (Blackwell)", "AMD MI210", "AMD MI300A"].map((s) => (
+								<span class="px-2 py-1 bg-purple-100 text-purple-800 rounded text-sm">{s}</span>
+							))}
+						</div>
+					</div>
+					<div>
+						<h3 class="font-semibold mb-2 text-sm uppercase tracking-wide text-gray-600 dark:text-gray-400">Systems Operated</h3>
+						<div class="flex flex-wrap gap-2">
+							{["Summit (ORNL)", "Frontier (ORNL)", "Perlmutter (NERSC)", "DARWIN (UD)", "Jetstream (XSEDE)"].map((s) => (
+								<span class="px-2 py-1 bg-orange-100 text-orange-800 rounded text-sm">{s}</span>
+							))}
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div>
+				<h2 class="text-xl font-semibold mb-4 border-b border-gray-200 dark:border-gray-700 pb-1">Graduate Coursework</h2>
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+					<div class="border-l-4 border-indigo-500 pl-4">
+						<h3 class="font-semibold text-sm">Advanced Topics in Quantum Information</h3>
+						<p class="text-xs mt-1 text-gray-600 dark:text-gray-400">Quantum computing models, information theory, error correction, applications to HPC and AI.</p>
+					</div>
+					<div class="border-l-4 border-red-500 pl-4">
+						<h3 class="font-semibold text-sm">Computer Systems: Architecture</h3>
+						<p class="text-xs mt-1 text-gray-600 dark:text-gray-400">Multicomputer / multiprocessor systems and the impact of emerging parallel architectures.</p>
+					</div>
+					<div class="border-l-4 border-cyan-500 pl-4">
+						<h3 class="font-semibold text-sm">Algorithm Design and Analysis</h3>
+						<p class="text-xs mt-1 text-gray-600 dark:text-gray-400">Complexity, optimization, and rigorous algorithmic analysis.</p>
+					</div>
+					<div class="border-l-4 border-amber-500 pl-4">
+						<h3 class="font-semibold text-sm">Compiler Construction</h3>
+						<p class="text-xs mt-1 text-gray-600 dark:text-gray-400">Lexing, parsing, semantic analysis, code generation, optimization.</p>
+					</div>
+					<div class="border-l-4 border-pink-500 pl-4">
+						<h3 class="font-semibold text-sm">Artificial Intelligence</h3>
+						<p class="text-xs mt-1 text-gray-600 dark:text-gray-400">Search, machine learning, reasoning, and problem solving.</p>
+					</div>
+					<div class="border-l-4 border-teal-500 pl-4">
+						<h3 class="font-semibold text-sm">Engineering Mathematics</h3>
+						<p class="text-xs mt-1 text-gray-600 dark:text-gray-400">Linear algebra, vector spaces, and differential equations for engineering applications.</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="bg-gray-50 dark:bg-gray-800/40 rounded-lg p-5">
+				<p class="text-sm">
+					For a downloadable copy of the full CV with referees,
+					<a href={cvPdfHref} class="cactus-link font-medium" target="_blank" rel="noopener noreferrer">download the PDF</a>.
+					For publication-level detail, see <a href="/publications/" class="cactus-link font-medium">Publications</a>.
+				</p>
+			</div>
+		</div>
+	</section>
+</PageLayout>

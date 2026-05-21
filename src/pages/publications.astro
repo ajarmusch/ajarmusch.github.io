@@ -1,0 +1,168 @@
+---
+import PageLayout from "@/layouts/Base.astro";
+import { Icon } from "astro-icon/components";
+import { publicationsTech, getDisplayPublication } from "@/data/publications";
+import { postersTech } from "@/data/posters";
+import { talksTech } from "@/data/talks";
+
+const meta = {
+	description: "Publications, conference posters, and invited talks by Aaron Jarmusch in High Performance Computing, GPU architecture, and compiler validation.",
+	title: "Publications",
+};
+
+function boldAuthorName(authors: string[], targetName: string = "Aaron Jarmusch"): string {
+	return authors.map(author =>
+		author.includes(targetName) ? `<strong>${author}</strong>` : author
+	).join(", ");
+}
+
+const sortedPubs = [...publicationsTech].sort((a, b) => {
+	if (b.year !== a.year) return b.year - a.year;
+	const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+	const aM = a.month ? months.indexOf(a.month) : -1;
+	const bM = b.month ? months.indexOf(b.month) : -1;
+	return bM - aM;
+});
+
+const pubsByYear = sortedPubs.reduce<Record<number, typeof sortedPubs>>((acc, pub) => {
+	(acc[pub.year] ||= []).push(pub);
+	return acc;
+}, {});
+
+const years = Object.keys(pubsByYear).map(Number).sort((a, b) => b - a);
+---
+
+<PageLayout meta={meta}>
+	<div class="space-y-10">
+		<div>
+			<h1 class="title mb-3">Publications</h1>
+			<p class="text-sm text-gray-600 dark:text-gray-400 max-w-3xl">
+				Peer-reviewed publications, preprints, posters, and invited talks. For a continuously updated list, see
+				<a href="https://scholar.google.com/citations?user=35NUiPsAAAAJ" class="cactus-link font-medium" target="_blank" rel="noopener noreferrer">Google Scholar</a>.
+			</p>
+		</div>
+
+		<section>
+			<h2 class="text-2xl font-semibold mb-6 border-b border-gray-300 dark:border-gray-700 pb-2">Papers & Preprints</h2>
+			<div class="space-y-10">
+				{years.map((year) => (
+					<div>
+						<h3 class="text-lg font-semibold mb-4 text-accent-2">{year}</h3>
+						<div class="space-y-5">
+							{pubsByYear[year].map((pub) => {
+								const displayPub = getDisplayPublication(pub);
+								return (
+									<article class="bg-gray-50 dark:bg-gray-800/40 rounded-lg p-5 shadow-sm">
+										<div class="space-y-2">
+											<h4 class="text-base sm:text-lg font-semibold">
+												<a class="cactus-link hover:underline" href={pub.url} target="_blank" rel="noopener noreferrer">
+													{pub.title}
+												</a>
+											</h4>
+											<p class="text-sm" set:html={boldAuthorName(pub.authors)}></p>
+											<div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+												<span class="italic">{displayPub.venue}</span>
+												<span>·</span>
+												<span>{displayPub.month ? `${displayPub.month} ${displayPub.year}` : displayPub.year}</span>
+												{displayPub.pages && <><span>·</span><span>pp. {displayPub.pages}</span></>}
+												{pub.status === 'preprint' && (
+													<span class="bg-blue-100 text-blue-800 px-2 py-0.5 rounded text-xs">Preprint</span>
+												)}
+												{pub.award && (
+													<span class="bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded text-xs">{pub.award}</span>
+												)}
+											</div>
+											<div class="flex flex-wrap gap-2 pt-1 text-xs">
+												{(pub.preprintPublication?.pdfUrl || displayPub.pdfUrl || pub.pdfUrl) && (
+													<a href={pub.preprintPublication?.pdfUrl || displayPub.pdfUrl || pub.pdfUrl} class="inline-flex items-center gap-1 px-2 py-1 bg-red-100 text-red-800 rounded hover:bg-red-200" target="_blank" rel="noopener noreferrer">
+														<Icon name="mdi:file-pdf-box" class="h-3.5 w-3.5" /> PDF
+													</a>
+												)}
+												{displayPub.doi && (
+													<a href={`https://doi.org/${displayPub.doi.replace(/^https?:\/\/doi\.org\//, '')}`} class="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 text-gray-800 rounded hover:bg-gray-200" target="_blank" rel="noopener noreferrer">
+														<Icon name="mdi:link-variant" class="h-3.5 w-3.5" /> DOI
+													</a>
+												)}
+												{pub.preprintPublication && pub.printPublication && (
+													<a href={pub.preprintPublication.url} class="inline-flex items-center gap-1 px-2 py-1 bg-blue-50 text-blue-700 rounded hover:bg-blue-100" target="_blank" rel="noopener noreferrer">
+														<Icon name="mdi:file-document-outline" class="h-3.5 w-3.5" /> arXiv
+													</a>
+												)}
+												{pub.codeUrl && (
+													<a href={pub.codeUrl} class="inline-flex items-center gap-1 px-2 py-1 bg-green-100 text-green-800 rounded hover:bg-green-200" target="_blank" rel="noopener noreferrer">
+														<Icon name="mdi:github" class="h-3.5 w-3.5" /> Code
+													</a>
+												)}
+												{pub.dataUrl && (
+													<a href={pub.dataUrl} class="inline-flex items-center gap-1 px-2 py-1 bg-purple-100 text-purple-800 rounded hover:bg-purple-200" target="_blank" rel="noopener noreferrer">
+														<Icon name="mdi:database" class="h-3.5 w-3.5" /> Data
+													</a>
+												)}
+											</div>
+											{pub.keywords && pub.keywords.length > 0 && (
+												<div class="flex flex-wrap gap-1 pt-1">
+													{pub.keywords.slice(0, 6).map((kw) => (
+														<span class="text-xs px-2 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded">{kw}</span>
+													))}
+												</div>
+											)}
+										</div>
+									</article>
+								);
+							})}
+						</div>
+					</div>
+				))}
+			</div>
+		</section>
+
+		<section>
+			<h2 class="text-2xl font-semibold mb-6 border-b border-gray-300 dark:border-gray-700 pb-2">Conference Posters</h2>
+			<div class="space-y-4">
+				{postersTech.map((poster) => {
+					const yearMatch = poster.desc.match(/(19|20)\d{2}/);
+					const eventName = poster.desc.replace(/\s+(19|20)\d{2}/, '').replace(/\s*-\s*Won.*$/, '');
+					const year = yearMatch ? yearMatch[0] : '';
+					const hasAward = poster.desc.includes('Won');
+					return (
+						<article class="bg-gray-50 dark:bg-gray-800/40 rounded-lg p-4 shadow-sm">
+							<h3 class="text-base font-medium">
+								<a class="cactus-link hover:underline" href={poster.href} target="_blank" rel="noopener noreferrer">{poster.title}</a>
+							</h3>
+							<div class="flex flex-wrap gap-2 items-center text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1">
+								<span>{eventName}</span>
+								{year && <><span>·</span><span>{year}</span></>}
+								{hasAward && <span class="bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded">{poster.desc.match(/Won[^,]*/)?.[0]}</span>}
+								<a href={poster.href} class="inline-flex items-center gap-1 cactus-link ml-auto" target="_blank" rel="noopener noreferrer">
+									<Icon name="mdi:file-pdf-box" class="h-4 w-4" /> Poster PDF
+								</a>
+							</div>
+						</article>
+					);
+				})}
+			</div>
+		</section>
+
+		<section>
+			<h2 class="text-2xl font-semibold mb-6 border-b border-gray-300 dark:border-gray-700 pb-2">Invited Talks</h2>
+			<div class="space-y-4">
+				{talksTech.map((talk) => {
+					const yearMatch = talk.desc.match(/(19|20)\d{2}/);
+					const eventName = talk.desc.replace(/\s+(19|20)\d{2}/, '');
+					const year = yearMatch ? yearMatch[0] : '';
+					return (
+						<article class="bg-gray-50 dark:bg-gray-800/40 rounded-lg p-4 shadow-sm">
+							<h3 class="text-base font-medium">
+								<a class="cactus-link hover:underline" href={talk.href} target="_blank" rel="noopener noreferrer">{talk.title}</a>
+							</h3>
+							<div class="flex flex-wrap gap-2 items-center text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1">
+								<span>{eventName}</span>
+								{year && <><span>·</span><span>{year}</span></>}
+							</div>
+						</article>
+					);
+				})}
+			</div>
+		</section>
+	</div>
+</PageLayout>

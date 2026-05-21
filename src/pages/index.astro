@@ -4,18 +4,42 @@ import PostPreview from "@/components/blog/PostPreview.astro";
 import { getAllPosts, sortMDByDate } from "@/data/post";
 import PageLayout from "@/layouts/Base.astro";
 import { publicationsTech, getDisplayPublication } from "@/data/publications";
-import { researchAreas } from "@/data/research";
 
-
-const MAX_POSTS = 10;
+const MAX_POSTS = 3;
 const allPosts = await getAllPosts();
 const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
+
+// Highlights shown on the home page — quant-framed, measured outcomes.
+// Methodology lives on /projects/.
+// Note: Tailwind classes are static strings so JIT can pick them up.
+const highlights = [
+	{
+		title: "GPU Architecture Characterization",
+		value: "Blackwell + MI300A",
+		body: "Microbenchmark studies covering FP4/FP6 tensor cores on NVIDIA Blackwell (RTX 5080) and FP8 + 2:4 sparsity on AMD MI300A. Two preprints in 2025–2026, one accepted at IPDPS 2026.",
+		borderClass: "border-blue-500",
+		labelClass: "text-blue-600 dark:text-blue-300",
+	},
+	{
+		title: "Compiler Validation at Scale",
+		value: "OpenACC 3.0+ · 4 vendors",
+		body: "OpenACC V&V testsuite shipping against NVIDIA HPC SDK, GCC, Clang/LLVM, and Cray — running on Summit, Frontier, and Perlmutter. Best Poster at SC22 SRC and DARWIN '23.",
+		borderClass: "border-green-500",
+		labelClass: "text-green-600 dark:text-green-300",
+	},
+	{
+		title: "CI/CD for HPC Compilers",
+		value: "−60% manual testing",
+		body: "Automated GitLab CI pipelines for LLVM OpenMP offloading across H100, GH200, MI210, and MI300A. Used by 15+ DOE exascale applications. Published at IWOMP 2024.",
+		borderClass: "border-purple-500",
+		labelClass: "text-purple-600 dark:text-purple-300",
+	},
+];
 ---
 
 <PageLayout meta={{ title: "Home" }}>
 	<section>
-		<div class="flex flex-col md:flex-row md:items-start md:gap-8 mb-8">
-			<!-- Photo Section with Name and Social Links -->
+		<div class="flex flex-col md:flex-row md:items-start md:gap-8 mb-12">
 			<div class="flex-shrink-0 mb-6 md:mb-0">
 				<div class="w-48 h-48 md:w-56 md:h-56 mx-auto md:mx-0 mb-4">
 					<img
@@ -25,216 +49,161 @@ const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 					/>
 				</div>
 				<div class="text-center md:text-left">
-					<h1 class="title mb-4">Aaron Jarmusch</h1>
-					<p class="mb-4 text-lg font-medium">
-					Ph.D. Student 
-					</p>
+					<h1 class="title mb-1">Aaron Jarmusch</h1>
+					<p class="mb-4 text-base font-medium text-gray-700 dark:text-gray-300">Ph.D. Student · HPC &amp; GPU Systems</p>
 					<SocialList />
 				</div>
 			</div>
-			
-			<!-- Introduction -->
+
 			<div class="flex-1">
-				<p class="text-2xl mb-4">
-					About Me
+				<p class="text-xl sm:text-2xl mb-4 font-semibold">About</p>
+				<p class="mb-3">
+					I'm a Computer Science Ph.D. student at the University of Delaware in the
+					<a class="cactus-link font-medium" href="https://crpl.cis.udel.edu" rel="noopener noreferrer" target="_blank">Computational Research Programming Lab (CRPL)</a>,
+					advised by
+					<a class="cactus-link font-medium" href="https://crpl.cis.udel.edu/sunita/" rel="noopener noreferrer" target="_blank">Dr. Sunita Chandrasekaran</a>.
 				</p>
-				<p class="mb-4">
-					I'm a Computer Science Ph.D. student at the University of Delaware researching High Performance Computing (HPC) and parallel programming models in 
-					<a
-						aria-label="CRPL Lab website"
-						class="cactus-link font-bold text-accent"
-						href="https://crpl.cis.udel.edu"
-						rel="noopener noreferrer"
-						target="_blank">
-						Computational Research Programming Lab (CRPL).
-					</a>
-					My  advisor is <a
-						aria-label="Dr. Sunita Chandrasekaran"
-						class="cactus-link font-bold text-accent"
-						href="https://crpl.cis.udel.edu/sunita/"
-						rel="noopener noreferrer"
-						target="_blank">
-						Dr. Sunita Chandrasekaran.
-					</a>
+				<p class="mb-3">
+					My research builds <strong>analytical performance models for GPU computing</strong> and <strong>validation infrastructure for HPC compilers</strong>.
+					I characterize new architectures (NVIDIA Blackwell &amp; Hopper, AMD MI300A) with targeted microbenchmarks, and I ship CI/CD pipelines
+					for LLVM-based compilers across H100, GH200, and MI300A nodes.
 				</p>
-
-				<p class="mb-4">
-					My PhD research focusses on developing an analytical model for performance modeling for GPU computing technologies.
+				<p class="mb-3">
+					I also apply LLMs to compiler validation — automating test generation and using LLM-as-judge to grade the resulting tests.
 				</p>
-				<p class="mb-4">
-				My research also develops comprehensive testing frameworks for OpenACC and OpenMP GPU offloading across NVIDIA's latest architectures (H100, GH200). I work on automated CI/CD pipelines for LLVM-based compilers and apply LLMs to compiler validation, making HPC technologies more accessible and robust.
-				</p>
+				<div class="mt-4 flex flex-wrap gap-2 text-sm">
+					<a href="/publications/" class="px-3 py-1 rounded bg-blue-100 text-blue-800 hover:bg-blue-200">Publications</a>
+					<a href="/projects/" class="px-3 py-1 rounded bg-green-100 text-green-800 hover:bg-green-200">Projects</a>
+					<a href="/cv/" class="px-3 py-1 rounded bg-purple-100 text-purple-800 hover:bg-purple-200">CV</a>
+					<a href="/contact/" class="px-3 py-1 rounded bg-gray-200 text-gray-800 hover:bg-gray-300">Contact</a>
+				</div>
 			</div>
 		</div>
 
-	<section class="mt-16">
-		<h2 class="title mb-4 text-xl">Recent News</h2>
-		<div class="space-y-3">
-			<div class="flex gap-4">
-				<span class="text-sm text-gray-600 min-w-[120px]">[February 2026]</span>
-				<span class="text-sm">New preprint <a href="https://arxiv.org/abs/2602.10262" class="cactus-link font-medium" target="_blank" rel="noopener noreferrer">"Execution-Centric Characterization of FP8 Matrix Cores, Asynchronous Execution, and Structured Sparsity on AMD MI300A"</a> published on arXiv!</span>
+		<section class="mt-16">
+			<h2 class="title mb-4 text-xl">Recent News</h2>
+			<div class="space-y-3">
+				<div class="flex gap-4">
+					<span class="text-sm text-gray-600 dark:text-gray-400 min-w-[120px]">[February 2026]</span>
+					<span class="text-sm">New preprint <a href="https://arxiv.org/abs/2602.10262" class="cactus-link font-medium" target="_blank" rel="noopener noreferrer">"Execution-Centric Characterization of FP8 Matrix Cores, Asynchronous Execution, and Structured Sparsity on AMD MI300A"</a> on arXiv.</span>
+				</div>
+				<div class="flex gap-4">
+					<span class="text-sm text-gray-600 dark:text-gray-400 min-w-[120px]">[February 2026]</span>
+					<span class="text-sm">Paper accepted to <strong>IPDPS 2026</strong>.</span>
+				</div>
+				<div class="flex gap-4">
+					<span class="text-sm text-gray-600 dark:text-gray-400 min-w-[120px]">[November 2025]</span>
+					<span class="text-sm">Passed Ph.D. preliminary examination.</span>
+				</div>
+				<div class="flex gap-4">
+					<span class="text-sm text-gray-600 dark:text-gray-400 min-w-[120px]">[August 2025]</span>
+					<span class="text-sm">Attended ATPESC 2025 at Argonne National Laboratory.</span>
+				</div>
+				<div class="flex gap-4">
+					<span class="text-sm text-gray-600 dark:text-gray-400 min-w-[120px]">[July 2025]</span>
+					<span class="text-sm">New preprint <a href="https://doi.org/10.48550/arXiv.2507.10789" class="cactus-link font-medium" target="_blank" rel="noopener noreferrer">"Dissecting the NVIDIA Blackwell Architecture with Microbenchmarks"</a> on arXiv.</span>
+				</div>
+				<div class="flex gap-4">
+					<span class="text-sm text-gray-600 dark:text-gray-400 min-w-[120px]">[August 2024]</span>
+					<span class="text-sm">Paper accepted at WACCPD @ SC24 — <a href="https://doi.org/10.48550/arXiv.2408.11729" class="cactus-link font-medium" target="_blank" rel="noopener noreferrer">LLM-as-a-Judge for Validation &amp; Verification Testsuites</a>.</span>
+				</div>
+				<div class="flex gap-4">
+					<span class="text-sm text-gray-600 dark:text-gray-400 min-w-[120px]">[August 2024]</span>
+					<span class="text-sm">Paper accepted at IWOMP — <a href="https://doi.org/10.48550/arXiv.2408.11777" class="cactus-link font-medium" target="_blank" rel="noopener noreferrer">CI/CD framework for OpenMP Offloading validation and benchmarking</a>.</span>
+				</div>
 			</div>
-      <div class="flex gap-4">
-				<span class="text-sm text-gray-600 min-w-[120px]">[February 2026]</span>
-				<span class="text-sm">Paper accepted to IPDPS 2026!</span>
-      </div>
-			<div class="flex gap-4">
-				<span class="text-sm text-gray-600 min-w-[120px]">[November 2025]</span>
-				<span class="text-sm">Passed my Ph.D. preliminary examination!</span>
-			</div>
-			<div class="flex gap-4">
-				<span class="text-sm text-gray-600 min-w-[120px]">[August 2025]</span>
-				<span class="text-sm">Attended ATPESC 2025 (Argonne Training Program on Extreme-Scale Computing) at Argonne National Laboratory!</span>
-			</div>
-			<div class="flex gap-4">
-				<span class="text-sm text-gray-600 min-w-[120px]">[July 2025]</span>
-				<span class="text-sm">New preprint <a href="https://doi.org/10.48550/arXiv.2507.10789" class="cactus-link font-medium" target="_blank" rel="noopener noreferrer">"Dissecting the NVIDIA Blackwell Architecture with Microbenchmarks"</a> published on arXiv!</span>
-			</div>
-			<div class="flex gap-4">
-				<span class="text-sm text-gray-600 min-w-[120px]">[August 2024]</span>
-				<span class="text-sm">Paper accepted to WACCPD at SC24! - <a href="https://doi.org/10.48550/arXiv.2408.11729" class="cactus-link font-medium" target="_blank" rel="noopener noreferrer">LLM-as-a-Judge for Validation and Verification Testsuites</a> available on arXiv!</span>
-			</div>
-			<div class="flex gap-4">
-				<span class="text-sm text-gray-600 min-w-[120px]">[August 2024]</span>
-				<span class="text-sm">Paper accepted at IWOMP! - <a href="https://doi.org/10.48550/arXiv.2408.11777" class="cactus-link font-medium" target="_blank" rel="noopener noreferrer">CI/CD framework for OpenMP Offloading validation and benchmarking</a>!</span>
-			</div>
-		</div>
-	</section>
+		</section>
 
-	<section class="mt-16">
-		<h2 class="title mb-4 text-xl">
-			<a
-			aria-label="Research Focus"
-			class=" underline-offset-2 sm:py-0 sm:hover:underline"
-			href="/research/"
-			>
-			Research & Impact
-			</a>
-		</h2>
-		<div class="space-y-6">
-			{
-				researchAreas.map((area) => (
-					<div class={`border-l-4 border-${area.color}-500 pl-4`}>
-						<h3 class="font-semibold text-lg mb-2">{area.title}</h3>
-						<p class="text-sm">
-							{area.description}
-						</p>
+		<section class="mt-16">
+			<h2 class="title mb-2 text-xl">
+				<a class="underline-offset-2 sm:hover:underline" href="/projects/">Selected Projects &amp; Outcomes</a>
+			</h2>
+			<p class="text-sm text-gray-600 dark:text-gray-400 mb-6">
+				Headline results — for the rest, see <a href="/projects/" class="cactus-link">Projects</a>.
+			</p>
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+				{highlights.map((h) => (
+					<div class={`bg-gray-50 dark:bg-gray-800/40 rounded-lg p-5 border-t-4 ${h.borderClass}`}>
+						<div class={`text-xs font-semibold uppercase tracking-wide mb-1 ${h.labelClass}`}>{h.title}</div>
+						<div class="text-xl sm:text-2xl font-bold mb-2">{h.value}</div>
+						<p class="text-sm leading-snug">{h.body}</p>
 					</div>
-				))
-			}
-		</div>		
-	</section>
+				))}
+			</div>
+		</section>
 
-	<section class="mt-16">
-		<h2 class="title mb-4 text-xl">Recent Publications</h2>
-		<p class="text-sm text-gray-600 mb-6">Visit <a href="https://scholar.google.com/citations?user=35NUiPsAAAAJ" class="cactus-link" target="_blank">Google Scholar</a> for a full list</p>
-		
-		<div class="space-y-6">
-			{
-				publicationsTech
-					.sort((a, b) => b.year - a.year || (b.month && a.month ? new Date(b.month).getMonth() - new Date(a.month).getMonth() : 0))
-					.slice(0, 3)
-					.map((pub) => {
-						const displayPub = getDisplayPublication(pub);
-						return (
-							<div class="border-b border-gray-200 pb-4">
-								<p class="text-sm mb-2">
-									{pub.authors.map((author, index) => (
-										<span>
-											{author === "Aaron Jarmusch" ? (
-												<strong>{author}</strong>
-											) : (
-												<span>{author}</span>
-											)}
-											{index < pub.authors.length - 1 && <span>, </span>}
-										</span>
-									))}
-									<span> ({displayPub.year}). </span>
-									<a href={displayPub.url} class="cactus-link" target="_blank">
-										<strong>{pub.title}</strong>
-									</a>. 
-									<em>{displayPub.venue}</em>
-									{displayPub.pages && <span>, pages {displayPub.pages}</span>}
-									{displayPub.doi && <span>. doi: {displayPub.doi}</span>}
-								</p>
-								<div class="flex gap-2 mb-2">
-									{(pub.preprintPublication?.url || displayPub.pdfUrl) && (
-										<a href={pub.preprintPublication?.url || displayPub.pdfUrl} class="text-xs px-2 py-1 bg-blue-100 text-blue-800 rounded hover:bg-blue-200" target="_blank">PDF</a>
-									)}
-									{pub.preprintPublication && (
-										<a href={pub.preprintPublication.url} class="text-xs px-2 py-1 bg-gray-100 text-gray-800 rounded hover:bg-gray-200" target="_blank">Preprint</a>
-									)}
-									{pub.codeUrl && (
-										<a href={pub.codeUrl} class="text-xs px-2 py-1 bg-green-100 text-green-800 rounded hover:bg-green-200" target="_blank">Code</a>
-									)}
-									{pub.dataUrl && (
-										<a href={pub.dataUrl} class="text-xs px-2 py-1 bg-purple-100 text-purple-800 rounded hover:bg-purple-200" target="_blank">Data</a>
-									)}
-									{pub.award && (
-										<span class="text-xs px-2 py-1 bg-yellow-100 text-yellow-800 rounded">🏆 {pub.award}</span>
-									)}
-								</div>
-								{pub.keywords && pub.keywords.length > 0 && (
-									<div class="flex flex-wrap gap-1">
-										{pub.keywords.slice(0, 4).map(keyword => (
-											<span class="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded">{keyword}</span>
-										))}
-									</div>
-								)}
-							</div>
-						);
-					})
-			}
-		</div>
-	</section>
+		<section class="mt-16">
+			<h2 class="title mb-2 text-xl">
+				<a class="underline-offset-2 sm:hover:underline" href="/publications/">Recent Publications</a>
+			</h2>
+			<p class="text-sm text-gray-600 dark:text-gray-400 mb-6">
+				Full list on <a href="/publications/" class="cactus-link">Publications</a> or
+				<a href="https://scholar.google.com/citations?user=35NUiPsAAAAJ" class="cactus-link" target="_blank" rel="noopener noreferrer">Google Scholar</a>.
+			</p>
 
-	<section class="mt-16">
-		<h2 class="title mb-4 text-xl">
-			<a
-			aria-label="Recent Blog Posts"
-			class=" underline-offset-2 sm:py-0 sm:hover:underline"
-			href="/posts/"
-			>
-			Recent Blog Posts
-			</a>
-		</h2>
-		<p class="text-sm text-gray-600 mb-6">Insights on HPC research, technical tutorials, and industry perspectives</p>
-		
-		{allPostsByDate.length > 0 ? (
-			<ul class="space-y-6">
+			<div class="space-y-5">
 				{
-					allPostsByDate.slice(0, 3).map((post) => (
-						<li class="border-b border-gray-200 pb-4 last:border-b-0">
+					publicationsTech
+						.slice()
+						.sort((a, b) => b.year - a.year || (b.month && a.month ? new Date(`${b.month} 1, 2000`).getMonth() - new Date(`${a.month} 1, 2000`).getMonth() : 0))
+						.slice(0, 3)
+						.map((pub) => {
+							const displayPub = getDisplayPublication(pub);
+							return (
+								<div class="border-b border-gray-200 dark:border-gray-700 pb-4 last:border-b-0">
+									<p class="text-sm mb-2">
+										{pub.authors.map((author, index) => (
+											<span>
+												{author === "Aaron Jarmusch" ? (<strong>{author}</strong>) : (<span>{author}</span>)}
+												{index < pub.authors.length - 1 && <span>, </span>}
+											</span>
+										))}
+										<span> ({displayPub.year}). </span>
+										<a href={displayPub.url} class="cactus-link" target="_blank" rel="noopener noreferrer"><strong>{pub.title}</strong></a>.
+										<em> {displayPub.venue}</em>
+										{displayPub.pages && <span>, pp. {displayPub.pages}</span>}
+										{displayPub.doi && <span>. doi: {displayPub.doi}</span>}.
+									</p>
+									<div class="flex gap-2 flex-wrap">
+										{(pub.preprintPublication?.pdfUrl || displayPub.pdfUrl || pub.pdfUrl) && (
+											<a href={pub.preprintPublication?.pdfUrl || displayPub.pdfUrl || pub.pdfUrl} class="text-xs px-2 py-1 bg-red-100 text-red-800 rounded hover:bg-red-200" target="_blank" rel="noopener noreferrer">PDF</a>
+										)}
+										{pub.preprintPublication && pub.printPublication && (
+											<a href={pub.preprintPublication.url} class="text-xs px-2 py-1 bg-gray-100 text-gray-800 rounded hover:bg-gray-200" target="_blank" rel="noopener noreferrer">Preprint</a>
+										)}
+										{pub.codeUrl && (
+											<a href={pub.codeUrl} class="text-xs px-2 py-1 bg-green-100 text-green-800 rounded hover:bg-green-200" target="_blank" rel="noopener noreferrer">Code</a>
+										)}
+										{pub.award && (
+											<span class="text-xs px-2 py-1 bg-yellow-100 text-yellow-800 rounded">{pub.award}</span>
+										)}
+									</div>
+								</div>
+							);
+						})
+				}
+			</div>
+		</section>
+
+		<section class="mt-16">
+			<h2 class="title mb-2 text-xl">
+				<a class="underline-offset-2 sm:hover:underline" href="/posts/">Recent Blog Posts</a>
+			</h2>
+			<p class="text-sm text-gray-600 dark:text-gray-400 mb-6">Notes on HPC research, GPU computing, and side projects.</p>
+
+			{allPostsByDate.length > 0 ? (
+				<ul class="space-y-6">
+					{allPostsByDate.map((post) => (
+						<li class="border-b border-gray-200 dark:border-gray-700 pb-4 last:border-b-0">
 							<PostPreview as="div" post={post} />
 						</li>
-					))
-				}
-			</ul>
-		) : (
-			<div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 text-center">
-				<p class="text-gray-600 mb-4">Blog posts coming soon!</p>
-				<p class="text-sm text-gray-500">
-					I'm working on sharing insights about HPC research, GPU computing, and compiler validation. 
-					Check back soon for technical tutorials and research perspectives.
-				</p>
-			</div>
-		)}
-		
-		{allPostsByDate.length > 3 && (
-			<div class="mt-6 text-center">
-				<a
-					href="/posts/"
-					class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
-				>
-					View All Posts
-					<svg class="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-					</svg>
-				</a>
-			</div>
-		)}
+					))}
+				</ul>
+			) : (
+				<div class="bg-gray-50 dark:bg-gray-800/40 rounded-lg p-5 text-sm text-gray-600 dark:text-gray-400">
+					Blog posts coming soon.
+				</div>
+			)}
+		</section>
 	</section>
-
-	
-
 </PageLayout>

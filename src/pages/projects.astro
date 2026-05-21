@@ -1,0 +1,253 @@
+---
+import PageLayout from "@/layouts/Base.astro";
+import { Icon } from "astro-icon/components";
+import { researchProjects } from "@/data/research";
+import { publicationsTech } from "@/data/publications";
+
+const meta = {
+	description: "Research and engineering projects by Aaron Jarmusch — measured outcomes in GPU performance characterization, compiler validation, and CI/CD for HPC.",
+	title: "Projects",
+};
+
+// Quant-framed metric overlays for each project. Keyed by project id.
+// These emphasize *what was measured / shipped*, not methodology.
+const projectMetrics: Record<string, { label: string; value: string }[]> = {
+	"openacc-vv": [
+		{ value: "OpenACC 3.0+", label: "spec coverage" },
+		{ value: "4 vendors", label: "NVIDIA HPC SDK, GCC, Clang/LLVM, Cray" },
+		{ value: "3 DOE systems", label: "Summit, Frontier, Perlmutter" },
+		{ value: "Best Poster — SC22", label: "ACM SRC, DARWIN '23" },
+	],
+	"s4pst": [
+		{ value: "4 architectures", label: "H100, GH200, MI210, MI300A" },
+		{ value: "15+ apps", label: "DOE exascale workloads validated" },
+		{ value: "−60%", label: "manual testing overhead" },
+		{ value: "IWOMP '24", label: "published, peer reviewed" },
+	],
+	"llm4vv": [
+		{ value: "2 papers", label: "FGCS journal + SC24-W workshop" },
+		{ value: "GPT-class", label: "LLM-as-judge for compiler tests" },
+		{ value: "OpenACC + OpenMP", label: "directive coverage" },
+	],
+	"openmp-cicd": [
+		{ value: "IWOMP '24", label: "20th Intl. Workshop on OpenMP" },
+		{ value: "GitLab CI", label: "automated H100/GH200/MI300A runs" },
+		{ value: "LLVM Clang + Flang", label: "compilers under test" },
+	],
+	"gpu-validation-framework": [
+		{ value: "FP8, 2:4 sparsity", label: "characterized on MI300A" },
+		{ value: "5th-gen TC", label: "Blackwell FP4/FP6 microbenchmarks" },
+		{ value: "IPDPS '26", label: "accepted" },
+	],
+};
+
+// Side / hackathon projects — keep separate so the headline projects stay clean.
+const sideProjects = [
+	{
+		title: "Quantum Error Correction — Surface Code Study",
+		summary: "Course-driven deep dive on stabilizer codes and the surface code, capped with a written report and a 30-page technical write-up.",
+		metrics: [
+			{ value: "30+ pages", label: "technical writeup" },
+			{ value: "Surface code", label: "decoder analysis" },
+		],
+		links: [
+			{ type: "paper" as const, url: "/qec/QEC-Aaron-Jarmusch.pdf", label: "Report (PDF)" },
+			{ type: "paper" as const, url: "/qec/Foundational_Concepts_of_Quantum_Error_Correction.pdf", label: "Primer (PDF)" },
+			{ type: "website" as const, url: "/posts/qec/", label: "Blog post" },
+		],
+		category: "Quantum",
+	},
+	{
+		title: "MARS — Multi-Architecture Roofline Study",
+		summary: "Roofline-model performance characterization of GEMM and FDTD on CPU+GPU. Measured cache-hit behavior and bandwidth-bound vs compute-bound regimes across problem sizes.",
+		metrics: [
+			{ value: "GEMM + FDTD", label: "kernels measured" },
+			{ value: "CPU + GPU", label: "rooflines compared" },
+		],
+		links: [
+			{ type: "paper" as const, url: "/MARS/mars_report.pdf", label: "Report (PDF)" },
+			{ type: "paper" as const, url: "/MARS/mars_poster.pdf", label: "Poster (PDF)" },
+			{ type: "paper" as const, url: "/MARS/mars_presentation.pdf", label: "Slides (PDF)" },
+			{ type: "website" as const, url: "/posts/mars/", label: "Blog post" },
+		],
+		category: "Performance Analysis",
+	},
+	{
+		title: "HenStreet Hacks 2025 — SallieMae Track",
+		summary: "Built a hackathon prototype in a fast-turnaround team setting for the SallieMae industry track at the University of Delaware.",
+		metrics: [
+			{ value: "48-hour", label: "build window" },
+			{ value: "Team of 4", label: "cross-functional" },
+		],
+		links: [
+			{ type: "paper" as const, url: "/HenStreet/henstreethacks-salliemae.pdf", label: "Presentation (PDF)" },
+			{ type: "website" as const, url: "/posts/henstreet-2025/", label: "Blog post" },
+		],
+		category: "Hackathon",
+	},
+];
+
+const iconMap = {
+	github: "mdi:github",
+	gitlab: "mdi:gitlab",
+	website: "mdi:web",
+	paper: "mdi:file-document",
+};
+const colorMap = {
+	github: "bg-blue-100 text-blue-800 hover:bg-blue-200",
+	gitlab: "bg-orange-100 text-orange-800 hover:bg-orange-200",
+	website: "bg-green-100 text-green-800 hover:bg-green-200",
+	paper: "bg-purple-100 text-purple-800 hover:bg-purple-200",
+};
+
+// For each project, look up related publications so we can show "results" links.
+function pubsFor(projectId: string) {
+	return publicationsTech.filter(
+		(p) => p.primaryProject === projectId || p.researchTags.includes(projectId),
+	);
+}
+---
+
+<PageLayout meta={meta}>
+	<div class="space-y-6">
+		<div>
+			<h1 class="title mb-3">Projects</h1>
+			<p class="text-sm sm:text-base text-gray-700 dark:text-gray-300 max-w-3xl">
+				Selected work in GPU performance characterization, compiler validation, and CI/CD for HPC.
+				Each project is summarized by <strong>what shipped and what was measured</strong> — not the methodology behind it.
+				Links go straight to source, papers, and dashboards.
+			</p>
+		</div>
+	</div>
+
+	<section class="mt-12">
+		<h2 class="text-2xl font-semibold mb-6 border-b border-gray-300 dark:border-gray-700 pb-2">Research Projects</h2>
+		<div class="space-y-8">
+			{researchProjects.map((project) => {
+				const metrics = projectMetrics[project.id] ?? [];
+				const relatedPubs = pubsFor(project.id);
+				return (
+					<article class="bg-gray-50 dark:bg-gray-800/40 rounded-lg p-5 sm:p-6 shadow-sm">
+						<div class="flex flex-col sm:flex-row sm:items-start sm:gap-5">
+							{project.logo && (
+								<div class="flex-shrink-0 mb-3 sm:mb-0">
+									<img src={project.logo} alt={`${project.title} logo`} class="w-20 h-16 sm:w-24 sm:h-20 object-contain bg-white dark:bg-gray-100 rounded p-2" />
+								</div>
+							)}
+							<div class="flex-1 min-w-0">
+								<div class="flex flex-wrap items-baseline justify-between gap-2 mb-2">
+									<h3 class="text-lg sm:text-xl font-semibold">
+										{project.links.length > 0 ? (
+											<a class="cactus-link" href={project.links[0].url} rel="noopener noreferrer" target="_blank">
+												{project.title}
+											</a>
+										) : project.title}
+									</h3>
+									<span class="text-xs px-2 py-0.5 rounded bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-200">
+										{project.status}
+									</span>
+								</div>
+
+								<p class="text-sm sm:text-base mb-4">{project.description}</p>
+
+								{metrics.length > 0 && (
+									<div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+										{metrics.map((m) => (
+											<div class="border-l-2 border-accent pl-3">
+												<div class="text-lg font-bold text-accent-2 leading-tight">{m.value}</div>
+												<div class="text-[11px] sm:text-xs text-gray-600 dark:text-gray-400 leading-snug">{m.label}</div>
+											</div>
+										))}
+									</div>
+								)}
+
+								{project.technologies.length > 0 && (
+									<div class="flex flex-wrap gap-1.5 mb-4">
+										{project.technologies.slice(0, 8).map((tech) => (
+											<span class="text-xs px-2 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded">{tech}</span>
+										))}
+									</div>
+								)}
+
+								<div class="flex flex-wrap gap-2">
+									{project.links.map((link) => (
+										<a
+											class={`inline-flex items-center gap-1 text-xs sm:text-sm px-3 py-1 rounded ${colorMap[link.type]}`}
+											href={link.url}
+											target="_blank"
+											rel="noopener noreferrer"
+										>
+											<Icon aria-hidden="true" class="h-4 w-4" focusable="false" name={iconMap[link.type]} />
+											<span>{link.label}</span>
+										</a>
+									))}
+									{relatedPubs.slice(0, 2).map((pub) => (
+										<a
+											class="inline-flex items-center gap-1 text-xs sm:text-sm px-3 py-1 rounded bg-purple-100 text-purple-800 hover:bg-purple-200"
+											href={pub.url}
+											target="_blank"
+											rel="noopener noreferrer"
+											title={pub.title}
+										>
+											<Icon aria-hidden="true" class="h-4 w-4" focusable="false" name="mdi:file-document" />
+											<span>{pub.venueShort || pub.shortTitle}</span>
+										</a>
+									))}
+								</div>
+							</div>
+						</div>
+					</article>
+				);
+			})}
+		</div>
+	</section>
+
+	<section class="mt-16">
+		<h2 class="text-2xl font-semibold mb-2 border-b border-gray-300 dark:border-gray-700 pb-2">Side Projects & Coursework</h2>
+		<p class="text-sm text-gray-600 dark:text-gray-400 mb-6">Self-contained projects from coursework, hackathons, and exploratory work.</p>
+		<div class="space-y-6">
+			{sideProjects.map((p) => (
+				<article class="bg-gray-50 dark:bg-gray-800/40 rounded-lg p-5 shadow-sm">
+					<div class="flex flex-wrap items-baseline justify-between gap-2 mb-2">
+						<h3 class="text-lg font-semibold">{p.title}</h3>
+						<span class="text-xs px-2 py-0.5 rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200">{p.category}</span>
+					</div>
+					<p class="text-sm mb-4">{p.summary}</p>
+					{p.metrics.length > 0 && (
+						<div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+							{p.metrics.map((m) => (
+								<div class="border-l-2 border-accent pl-3">
+									<div class="text-base font-bold text-accent-2 leading-tight">{m.value}</div>
+									<div class="text-[11px] sm:text-xs text-gray-600 dark:text-gray-400 leading-snug">{m.label}</div>
+								</div>
+							))}
+						</div>
+					)}
+					<div class="flex flex-wrap gap-2">
+						{p.links.map((link) => (
+							<a
+								class={`inline-flex items-center gap-1 text-xs sm:text-sm px-3 py-1 rounded ${colorMap[link.type]}`}
+								href={link.url}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<Icon aria-hidden="true" class="h-4 w-4" focusable="false" name={iconMap[link.type]} />
+								<span>{link.label}</span>
+							</a>
+						))}
+					</div>
+				</article>
+			))}
+		</div>
+	</section>
+
+	<section class="mt-16">
+		<div class="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-5 text-sm">
+			Looking for code? Most of my open-source work lives on
+			<a href="https://github.com/ajarmusch" class="cactus-link font-medium" target="_blank" rel="noopener noreferrer">GitHub</a>
+			and in the
+			<a href="https://github.com/OpenACCUserGroup/OpenACCV-V" class="cactus-link font-medium" target="_blank" rel="noopener noreferrer">OpenACCV-V</a>
+			repository.
+		</div>
+	</section>
+</PageLayout>

@@ -1,0 +1,108 @@
+---
+import PageLayout from "@/layouts/Base.astro";
+import { Icon } from "astro-icon/components";
+
+const meta = {
+	description: "Contact Aaron Jarmusch — email, GitHub, LinkedIn, Google Scholar, and University of Delaware office address.",
+	title: "Contact",
+};
+
+const academicEmail = "jarmusch@udel.edu";
+
+const contactChannels = [
+	{
+		label: "Email (academic)",
+		value: academicEmail,
+		href: `mailto:${academicEmail}`,
+		icon: "mdi:email",
+		note: "Best for research, collaborations, and recruiting.",
+	},
+	{
+		label: "GitHub",
+		value: "github.com/ajarmusch",
+		href: "https://github.com/ajarmusch",
+		icon: "mdi:github",
+		note: "Open-source projects, validation suites, and side work.",
+	},
+	{
+		label: "LinkedIn",
+		value: "linkedin.com/in/aaron-jarmusch",
+		href: "https://www.linkedin.com/in/aaron-jarmusch/",
+		icon: "mdi:linkedin",
+		note: "Industry / internship outreach.",
+	},
+	{
+		label: "Google Scholar",
+		value: "Aaron Jarmusch",
+		href: "https://scholar.google.com/citations?user=35NUiPsAAAAJ",
+		icon: "mdi:school",
+		note: "Current publication list and citation metrics.",
+	},
+	{
+		label: "BlueSky",
+		value: "@ajarmusch.bsky.social",
+		href: "https://bsky.app/profile/ajarmusch.bsky.social",
+		icon: "ri:bluesky-fill",
+		note: "Occasional HPC and GPU notes.",
+	},
+];
+---
+
+<PageLayout meta={meta}>
+	<section>
+		<h1 class="title mb-3">Contact</h1>
+		<p class="text-sm sm:text-base text-gray-700 dark:text-gray-300 max-w-3xl mb-8">
+			Happy to talk about HPC, GPU architecture characterization, compiler validation, or AI-assisted testing.
+			Email is the fastest way to reach me; I usually respond within a few business days.
+		</p>
+
+		<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+			<div class="bg-gray-50 dark:bg-gray-800/40 rounded-lg p-5">
+				<h2 class="text-lg font-semibold mb-3">Office</h2>
+				<address class="not-italic text-sm leading-relaxed">
+					Aaron Jarmusch<br />
+					Computational Research and Programming Lab (CRPL)<br />
+					Department of Computer &amp; Information Sciences<br />
+					University of Delaware<br />
+					Newark, DE 19716, USA
+				</address>
+			</div>
+			<div class="bg-gray-50 dark:bg-gray-800/40 rounded-lg p-5">
+				<h2 class="text-lg font-semibold mb-3">Quick links</h2>
+				<ul class="space-y-1 text-sm">
+					<li>· <a href="/cv/" class="cactus-link">CV (with PDF)</a></li>
+					<li>· <a href="/publications/" class="cactus-link">Publications</a></li>
+					<li>· <a href="/projects/" class="cactus-link">Projects</a></li>
+					<li>· <a href="https://crpl.cis.udel.edu" class="cactus-link" target="_blank" rel="noopener noreferrer">CRPL lab page</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<h2 class="text-xl font-semibold mb-4">Channels</h2>
+		<div class="space-y-3">
+			{contactChannels.map((c) => (
+				<a
+					href={c.href}
+					target={c.href.startsWith("http") ? "_blank" : undefined}
+					rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
+					class="flex items-start gap-4 bg-gray-50 dark:bg-gray-800/40 hover:bg-gray-100 dark:hover:bg-gray-800/70 rounded-lg p-4 transition-colors"
+				>
+					<Icon name={c.icon} class="h-6 w-6 text-accent flex-shrink-0 mt-0.5" aria-hidden="true" focusable="false" />
+					<div class="flex-1 min-w-0">
+						<div class="flex flex-wrap items-baseline justify-between gap-2">
+							<span class="font-semibold">{c.label}</span>
+							<span class="text-sm text-accent-2 break-all">{c.value}</span>
+						</div>
+						<p class="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1">{c.note}</p>
+					</div>
+				</a>
+			))}
+		</div>
+
+		<div class="mt-10 bg-blue-50 dark:bg-blue-900/20 rounded-lg p-5 text-sm">
+			<strong>Prospective students &amp; collaborators:</strong>
+			If you're interested in compiler validation, GPU performance characterization, or applying LLMs to systems software,
+			feel free to reach out with a short note about what you'd like to work on.
+		</div>
+	</section>
+</PageLayout>
